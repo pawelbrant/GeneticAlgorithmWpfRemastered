@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Genetic Algorithm" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Edit">
+                <MenuItem Command="Help"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1" Margin="10 5 10 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Optymalizowane funkcje:</Label>
+            <Label Grid.Column="2" Grid.Row="0">Hiperparametry(?):</Label>
+            <ListBox Grid.Column="0" Grid.Row="1" SelectionMode="Multiple"/>
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10 0 10 0">
+                <Button Margin="0 0 0 5">Szczegóły</Button>
+                <Button Margin="0 5 0 5">Szczegóły</Button>
+                <Button Margin="0 5 0 5">Szczegóły</Button>
+                <Button Margin="0 5 0 0">Szczegóły</Button>
+            </StackPanel>
+            <ListBox Grid.Column="2" Grid.Row="1" SelectionMode="Multiple"/>
+            <StackPanel Grid.Column="3" Grid.Row="1" Margin="10 0 0 0">
+                <Button Margin="0 0 0 5">Jakiś</Button>
+                <Button Margin="0 5 0 5">Jakiś</Button>
+                <Button Margin="0 5 0 5">Jakiś</Button>
+                <Button Margin="0 5 0 5">Jakiś</Button>
+                <Button Margin="0 5 0 0">Jakiś</Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
