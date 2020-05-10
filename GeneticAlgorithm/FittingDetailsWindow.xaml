@@ -1,0 +1,97 @@
+﻿<Window x:Class="GeneticAlgorithm.FittingDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GeneticAlgorithm"
+        mc:Ignorable="d"
+        Title="Fitting Details" Height="450" Width="600">
+    <TabControl Margin="10 5 10 10">
+        <TabItem Header="Function">
+            
+        </TabItem>
+        <TabItem Header="Details">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid Grid.Column="0" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Width="*"/>
+                        <DataGridTextColumn Header="X value" Width="2*"/>
+                        <DataGridTextColumn Header="Y value" Width="2*"/>
+                        <DataGridTextColumn Header="Function value" Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0">Crossover propability:</Label>
+                    <Label Grid.Column="1" Grid.Row="0">Value</Label>
+                    <Label Grid.Column="0" Grid.Row="1">Mutation propability:</Label>
+                    <Label Grid.Column="1" Grid.Row="1">Value</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Number of individuals:</Label>
+                    <Label Grid.Column="1" Grid.Row="2">Value</Label>
+                    <Label Grid.Column="0" Grid.Row="3">Number of generations</Label>
+                    <Label Grid.Column="1" Grid.Row="3">Value</Label>
+                    <Label Grid.Column="0" Grid.Row="4">Searched value:</Label>
+                    <Label Grid.Column="1" Grid.Row="4">Min/Max</Label>
+                </Grid>
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0 5 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Generation:</Label>
+                    <Slider
+                        Grid.Column="1"
+                        Margin="0 10 0 0"
+                        Minimum="0" Maximum="20"
+                        TickFrequency="1"
+                        TickPlacement="BottomRight"
+                        />
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Plots">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0"></Image>
+                <Grid Grid.Row="1" Margin="0 5 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Generation:</Label>
+                    <Slider
+                        Grid.Column="1"
+                        Margin="0 10 0 0"
+                        Minimum="0" Maximum="20"
+                        TickFrequency="1"
+                        TickPlacement="BottomRight"
+                        />
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Summary">
+            
+        </TabItem>
+    </TabControl>
+</Window>
