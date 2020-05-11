@@ -5,45 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm"
         mc:Ignorable="d"
-        Title="Genetic Algorithm" Height="450" Width="800">
+        Title="Genetic Algorithm" Height="450" Width="800" MinHeight="300" MinWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Export to PDF"/>
+            </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Command="Help"></MenuItem>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+            </MenuItem>
+            <MenuItem Header="Fitting">
+                <MenuItem Header="Single mode"/>
+                <MenuItem Header="Batch mode"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock>Copyright KMB 2k20</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem HorizontalContentAlignment="Right">
+                <ProgressBar Width="200" Height="15" Margin="10 2 10 2" Minimum="0" Maximum="100" Value="70"/>
+            </StatusBarItem>
+        </StatusBar>
         <Grid Grid.Row="1" Margin="10 5 10 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0">Optymalizowane funkcje:</Label>
-            <Label Grid.Column="2" Grid.Row="0">Hiperparametry(?):</Label>
-            <ListBox Grid.Column="0" Grid.Row="1" SelectionMode="Multiple"/>
-            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10 0 10 0">
-                <Button Margin="0 0 0 5">Szczegóły</Button>
-                <Button Margin="0 5 0 5">Szczegóły</Button>
-                <Button Margin="0 5 0 5">Szczegóły</Button>
-                <Button Margin="0 5 0 0">Szczegóły</Button>
-            </StackPanel>
-            <ListBox Grid.Column="2" Grid.Row="1" SelectionMode="Multiple"/>
-            <StackPanel Grid.Column="3" Grid.Row="1" Margin="10 0 0 0">
-                <Button Margin="0 0 0 5">Jakiś</Button>
-                <Button Margin="0 5 0 5">Jakiś</Button>
-                <Button Margin="0 5 0 5">Jakiś</Button>
-                <Button Margin="0 5 0 5">Jakiś</Button>
-                <Button Margin="0 5 0 0">Jakiś</Button>
-            </StackPanel>
+            <Label Grid.Column="0" Grid.Row="0">Functions to optimize:</Label>
+            <Label Grid.Column="2" Grid.Row="0">Algorithm parameters:</Label>
+            <DataGrid Grid.Column="0" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Function" Width="3*"/>
+                    <DataGridTextColumn Header="X domain" Width="2*"/>
+                    <DataGridTextColumn Header="Y domain" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Column="1" Grid.Row="1" Margin="10 0 10 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Margin="0 0 0 5" Padding="5 5 5 5">Show details</Button>
+                <Button Grid.Row="1" Margin="0 5 0 5" Padding="5 5 5 5">Expoort</Button>
+                <Button Grid.Row="2" Margin="0 5 0 5" Padding="5 20 5 20">Fit</Button>
+                <Button Grid.Row="4" Margin="0 5 0 0" Padding="5 5 5 5">Remove</Button>
+            </Grid>
+            <DataGrid Grid.Column="2" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Crossover prop." Width="3*"/>
+                    <DataGridTextColumn Header="Mutation prop." Width="3*"/>
+                    <DataGridTextColumn Header="# of individuals" Width="3*"/>
+                    <DataGridTextColumn Header="# of generations" Width="3*"/>
+                    <DataGridTextColumn Header="min/max" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>
