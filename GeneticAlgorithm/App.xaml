@@ -4,6 +4,21 @@
              xmlns:local="clr-namespace:GeneticAlgorithm"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="SeaGreen"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="SeaGreen"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        
     </Application.Resources>
 </Application>
