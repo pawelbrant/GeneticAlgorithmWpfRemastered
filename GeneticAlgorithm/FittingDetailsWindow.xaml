@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm"
         mc:Ignorable="d"
-        Title="Fitting Details" Height="450" Width="700">
+        Title="Fitting Details" Height="450" Width="700" MinHeight="450" MinWidth="700">
     <TabControl Margin="10 5 10 10">
         <TabItem Header="Function">
             <Grid Margin="2,2,2,2" >
@@ -113,7 +113,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="0"></Image>
+                <Image Grid.Row="0" Source="Media/heatmap.png"></Image>
                 <Grid Grid.Row="1" Margin="0 5 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -131,7 +131,7 @@
             </Grid>
         </TabItem>
         <TabItem Header="Summary">
-            
+            <Image Grid.Row="0" Source="Media/plot.png"></Image>
         </TabItem>
     </TabControl>
 </Window>
