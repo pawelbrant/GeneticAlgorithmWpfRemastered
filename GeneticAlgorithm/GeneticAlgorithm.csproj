@@ -111,5 +111,9 @@
   <ItemGroup>
     <Resource Include="Media\surface3d_demo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\heatmap.png" />
+    <Resource Include="Media\plot.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
