@@ -8,12 +8,13 @@ namespace GeneticAlgorithm
 {
     public class AlgorithmParameters
     {
-        public AlgorithmParameters(float crossoverProbability, float mutationProbability, int population, int generations, bool isMaxSearching)
+        public AlgorithmParameters(float crossoverProbability, float mutationProbability, int population, int generations, int precision, bool isMaxSearching)
         {
             CrossoverProbability = crossoverProbability;
             MutationProbability = mutationProbability;
             Population = population;
             Generations = generations;
+            Precision = precision;
             this.isMaxSearching = isMaxSearching;
         }
 
@@ -22,6 +23,7 @@ namespace GeneticAlgorithm
         public int Population { get; set; }
         public int Generations { get; set; }
 
+        public int Precision { get; set; }
         public bool isMaxSearching { get; set; }
         
     }

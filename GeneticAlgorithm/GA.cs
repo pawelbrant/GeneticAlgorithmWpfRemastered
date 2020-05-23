@@ -10,6 +10,9 @@ namespace GeneticAlgorithm
     public class GA
     {
         public BitArray[,,] chromosomes { get; set; }
+        public float[,,] chromosomeValues;
+        public AlgorithmParameters algorithmParameters { get; }
+        public EvaluatedFunction evaluatedFunction { get; }
 
         public static int binary2Int(BitArray bitArray)
         {
@@ -31,6 +34,14 @@ namespace GeneticAlgorithm
         {
             Random random = new Random();
             return random.Next(0, (int)Math.Pow(2, precision));
+        }
+
+        public double[] relaxationFuncion (int xValue, int yValue)
+        {
+            double[] results = new double[2];
+            results[0] = (xValue * (evaluatedFunction.xDomain.Y - evaluatedFunction.xDomain.X) / Math.Pow(2, algorithmParameters.Precision))+evaluatedFunction.xDomain.X;
+            results[1] = (yValue * (evaluatedFunction.yDomain.Y - evaluatedFunction.yDomain.X) / Math.Pow(2, algorithmParameters.Precision)) + evaluatedFunction.yDomain.X;
+            return results;
         }
     }
 }
