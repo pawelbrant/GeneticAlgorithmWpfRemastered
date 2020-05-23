@@ -25,9 +25,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Margin="5">Crossover:</Label>
-                <xctk:DoubleUpDown  Grid.Row="0" Grid.Column="1" Margin="5" FormatString="F2" Watermark="Crossover probability" Increment=".01"  Maximum="1" Minimum="0"/>
+                <xctk:DoubleUpDown  x:Name="crossoverProbability" Grid.Row="0" Grid.Column="1" Margin="5" FormatString="F2" Watermark="Crossover probability" Increment=".01"  Maximum="1" Minimum="0"/>
                 <Label Grid.Row="0" Grid.Column="2" Margin="5">Mutation:</Label>
-                <xctk:DoubleUpDown  Grid.Row="0" Grid.Column="3" Margin="5" FormatString="F2" Watermark="Mutation probability" Increment=".01"  Maximum="1" Minimum="0"/>
+                <xctk:DoubleUpDown  x:Name="mutationProbability" Grid.Row="0" Grid.Column="3" Margin="5" FormatString="F2" Watermark="Mutation probability" Increment=".01"  Maximum="1" Minimum="0"/>
 
             </Grid>
         </GroupBox>
@@ -40,9 +40,9 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center">Number of individuals:</Label>
-            <xctk:IntegerUpDown  VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="5"  Maximum="100" Minimum="0"/>
+            <xctk:IntegerUpDown x:Name="individualsNumber"  VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="5"  Maximum="100" Minimum="0"/>
             <Label Grid.Row="0" Grid.Column="2" Margin="5" VerticalAlignment="Center">Number of generations:</Label>
-            <xctk:IntegerUpDown  Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="5"  Maximum="100" Minimum="0"/>
+            <xctk:IntegerUpDown x:Name="generationsNumber" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="5"  Maximum="100" Minimum="0"/>
             <GroupBox Header="Searching condition" Grid.Column="5" Margin="5" Padding="5">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -52,9 +52,8 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <RadioButton Grid.Row="0" Grid.Column="0">Minimum</RadioButton>
-
-                    <RadioButton Grid.Row="1" Grid.Column="0">Maximum</RadioButton>
+                    <RadioButton x:Name="minimumSearch"  Grid.Row="0" Grid.Column="0">Minimum</RadioButton>
+                    <RadioButton x:Name="maximumSearch" Grid.Row="1" Grid.Column="0">Maximum</RadioButton>
                 </Grid>
             </GroupBox>
 
@@ -63,7 +62,7 @@
 
         
         <StackPanel Margin ="5,20,5,5" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="3">
-            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right">Add</Button>
+            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" Click="AddParameters">Add</Button>
             <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" IsCancel="True" >Cancel</Button>
         </StackPanel>
     </Grid>

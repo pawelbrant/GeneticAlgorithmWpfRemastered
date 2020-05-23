@@ -23,5 +23,10 @@ namespace GeneticAlgorithm
         {
             InitializeComponent();
         }
+
+        private void AddParameters(object sender, RoutedEventArgs e)
+        {
+            Close()
+        }
     }
 }

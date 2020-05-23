@@ -17,8 +17,8 @@ namespace GeneticAlgorithm
             this.isMaxSearching = isMaxSearching;
         }
 
-        public float CrossoverProbability { get; set; }
-        public float MutationProbability { get; set; }
+        public double CrossoverProbability { get; set; }
+        public double MutationProbability { get; set; }
         public int Population { get; set; }
         public int Generations { get; set; }
 

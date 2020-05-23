@@ -45,7 +45,10 @@ namespace GeneticAlgorithm
             DlgAddParameters dlg = new DlgAddParameters();
             if (dlg.ShowDialog() == true)
             {
-
+                double crossoverProbability = (double)dlg.crossoverProbability.Value;
+                double mutationProbability = (double)dlg.mutationProbability.Value;
+                int population = (int)dlg.individualsNumber.Value;
+                int generationsNumber = (int)dlg.generationsNumber.Value;
             }
         }
     }
