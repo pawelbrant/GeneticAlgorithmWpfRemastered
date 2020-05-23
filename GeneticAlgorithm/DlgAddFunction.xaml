@@ -17,7 +17,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Margin="5">Function: </Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="functionExpression" Grid.Row="0" Grid.Column="1" Margin="5"/>
         <GroupBox Header="Domain" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -36,19 +36,19 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Margin="5">X: (</Label>
-                <xctk:DoubleUpDown  Grid.Row="0" Grid.Column="1" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="xFirstValue" Grid.Row="0" Grid.Column="1" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
                 <Label Grid.Row="0" Grid.Column="2" Margin="5"> , </Label>
-                <xctk:DoubleUpDown  Grid.Row="0" Grid.Column="3" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="xLastValue" Grid.Row="0" Grid.Column="3" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
                 <Label Grid.Row="0" Grid.Column="4" Margin="5">) Y: (</Label>
-                <xctk:DoubleUpDown  Grid.Row="0" Grid.Column="5" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="yFirstValue" Grid.Row="0" Grid.Column="5" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
                 <Label Grid.Row="0" Grid.Column="6" Margin="5">,</Label>
-                <xctk:DoubleUpDown  Grid.Row="0" Grid.Column="7" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="yLastValue" Grid.Row="0" Grid.Column="7" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
                 <Label Grid.Row="0" Grid.Column="8" Margin="5">)</Label>
             </Grid>
         </GroupBox>
         <StackPanel Margin ="5,20,5,5" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2">
-            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right">Add</Button>
-            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right">Cancel</Button>
+            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" Click="AddFunction">Add</Button>
+            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" IsCancel="True">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>

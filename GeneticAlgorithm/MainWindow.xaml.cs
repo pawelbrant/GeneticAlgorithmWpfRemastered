@@ -24,5 +24,29 @@ namespace GeneticAlgorithm
         {
             InitializeComponent();
         }
+
+        private void AddFunctionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DlgAddFunction dlg = new DlgAddFunction();
+            if (dlg.ShowDialog() == true)
+            {
+                string functionExpression = dlg.functionExpression.Text;
+                double xFirstValue = (double)dlg.xFirstValue.Value;
+                double xFLastValue = (double)dlg.xLastValue.Value;
+                double yFirstValue = (double)dlg.yFirstValue.Value;
+                double yLastValue = (double)dlg.yLastValue.Value;
+
+
+            }
+        }
+
+        private void AddParametersBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DlgAddParameters dlg = new DlgAddParameters();
+            if (dlg.ShowDialog() == true)
+            {
+
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using org.mariuszgromada.math.mxparser;
 
 namespace GeneticAlgorithm
@@ -10,10 +11,14 @@ namespace GeneticAlgorithm
     public class EvaluatedFunction
     {
         public Function function { get; set; }
+        public Vector xDomain { get; set; }
+        public Vector yDomain { get; set; }
 
-        public EvaluatedFunction(string function)
+        public EvaluatedFunction(string function, double xFirstValue, double xLastValue, double yFirstValue, double yLastValue)
         {
             this.function = new Function(function);
+            this.xDomain = new Vector(xFirstValue, xLastValue);
+            this.yDomain = new Vector(yFirstValue, yLastValue);
         }
     }
 }

@@ -86,6 +86,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DlgAddParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FittingDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +110,9 @@
     <Compile Include="Chromosome.cs" />
     <Compile Include="DlgAddFunction.xaml.cs">
       <DependentUpon>DlgAddFunction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DlgAddParameters.xaml.cs">
+      <DependentUpon>DlgAddParameters.xaml</DependentUpon>
     </Compile>
     <Compile Include="EvaluatedFunction.cs" />
     <Compile Include="FittingDetailsWindow.xaml.cs">

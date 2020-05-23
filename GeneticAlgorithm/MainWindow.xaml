@@ -78,8 +78,8 @@
                     <DataGridTextColumn Header="min/max" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Grid.Column="0" Grid.Row="2"  Margin ="0 5 0 5" Padding="5">Add function</Button>
-            <Button Grid.Column="2" Grid.Row="2"  Margin ="0 5 0 5" Padding="5">Add algorithm parameters</Button>
+            <Button x:Name="AddFunctionBtn" Grid.Column="0" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Click="AddFunctionBtn_Click">Add function</Button>
+            <Button x:Name="AddParametersBtn" Grid.Column="2" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Click="AddParametersBtn_Click">Add algorithm parameters</Button>
 
         </Grid>
     </Grid>
