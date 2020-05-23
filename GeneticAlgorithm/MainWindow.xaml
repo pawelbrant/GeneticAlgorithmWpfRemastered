@@ -45,6 +45,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0">Functions to optimize:</Label>
             <Label Grid.Column="2" Grid.Row="0">Algorithm parameters:</Label>
@@ -64,7 +65,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" Margin="0 0 0 5" Padding="5 5 5 5">Show details</Button>
-                <Button Grid.Row="1" Margin="0 5 0 5" Padding="5 5 5 5">Expoort</Button>
+                <Button Grid.Row="1" Margin="0 5 0 5" Padding="5 5 5 5">Export</Button>
                 <Button Grid.Row="2" Margin="0 5 0 5" Padding="5 20 5 20">Fit</Button>
                 <Button Grid.Row="4" Margin="0 5 0 0" Padding="5 5 5 5">Remove</Button>
             </Grid>
@@ -77,6 +78,9 @@
                     <DataGridTextColumn Header="min/max" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Grid.Column="0" Grid.Row="2"  Margin ="0 5 0 5" Padding="5">Add function</Button>
+            <Button Grid.Column="2" Grid.Row="2"  Margin ="0 5 0 5" Padding="5">Add algorithm parameters</Button>
+
         </Grid>
     </Grid>
 </Window>
