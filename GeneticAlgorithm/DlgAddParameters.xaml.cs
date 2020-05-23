@@ -26,7 +26,7 @@ namespace GeneticAlgorithm
 
         private void AddParameters(object sender, RoutedEventArgs e)
         {
-            Close()
+            Close();
         }
     }
 }
