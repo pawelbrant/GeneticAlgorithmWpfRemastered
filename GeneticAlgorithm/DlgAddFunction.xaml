@@ -17,7 +17,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Margin="5">Function: </Label>
-        <TextBox x:Name="functionExpression" Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="functionExpression" Grid.Row="0" Grid.Column="1" Margin="5" Text="f(x,y) = x^2 + 2*y"/>
         <GroupBox Header="Domain" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
