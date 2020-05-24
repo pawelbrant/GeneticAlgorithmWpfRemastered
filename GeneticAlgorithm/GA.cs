@@ -15,19 +15,31 @@ namespace GeneticAlgorithm
             this.algorithmParameters = algorithmParameters;
             this.evaluatedFunction = evaluatedFunction;
             this.Chromosomes = new BitArray[algorithmParameters.Generations, 2, algorithmParameters.Population];
-            this.ChromosomeValues = new float[algorithmParameters.Generations, 2, algorithmParameters.Population];
+            this.ChromosomeValues = new double[algorithmParameters.Generations, 3, algorithmParameters.Population];
 
-            this.BestValues = new float[algorithmParameters.Generations, 3];
-            this.MeanValues = new float[algorithmParameters.Generations, 3];
-            this.MedianValues = new float[algorithmParameters.Generations, 3];
+            this.BestValues = new double[algorithmParameters.Generations, 3];
+            this.MeanValues = new double[algorithmParameters.Generations, 3];
+            this.MedianValues = new double[algorithmParameters.Generations, 3];
+
+            // generate first population
+
+            for(int individualIndex=0; individualIndex<algorithmParameters.Population; individualIndex++)
+            {
+                int x = generateRandomValue();
+                int y = generateRandomValue();
+                BitArray x_genome = int2Binary(x);
+                BitArray y_genome = int2Binary(y);
+                this.Chromosomes[0, 0, individualIndex] = x_genome;
+                this.Chromosomes[0, 1, individualIndex] = y_genome;
+            }
 
         }
 
-        public BitArray[,,] Chromosomes { get; set; } // generation, {x,y}, population
-        public float[,,] ChromosomeValues { get; set; } // generation, {x,y}, value
-        public float[,] BestValues { get; set; } // generation, {x, y, f(x,y)}
-        public float[,] MeanValues { get; set; } // generation, {x, y, f(x,y)}
-        public float[,] MedianValues { get; set; } // generation, {x, y, f(x,y)}
+        public BitArray[][][] Chromosomes { get; set; } // generation, {x,y}, population
+        public double[][][] ChromosomeValues { get; set; } // generation, {x,y,, f(x,y)}, value
+        public double[] BestValues { get; set; } // generation
+        public double[] MeanValues { get; set; } // generation
+        public double[] MedianValues { get; set; } // generation
 
         public AlgorithmParameters algorithmParameters { get; }
         public EvaluatedFunction evaluatedFunction { get; }
@@ -117,9 +129,57 @@ namespace GeneticAlgorithm
             return results;
         }
 
+        public BitArray[,] SelectParents(BitArray[,]parents, double[] fitFunctionValue)
+        {
+            BitArray[,] selectedParents = new BitArray[2, algorithmParameters.Population];
+            double[] expFitFunc = new double[fitFunctionValue.Length];
+            for(int index = 0; index<fitFunctionValue.Length; index++)
+            {
+                expFitFunc[index] = Math.Exp(fitFunctionValue[index]);
+            }
+            Random random = new Random();
+            for(int parentIndex = 0; parentIndex<algorithmParameters.Population; parentIndex++)
+            {
+                double drawnValue = random.NextDouble() * expFitFunc.Sum();
+                for(int funcIndex=0; funcIndex<expFitFunc.Length; funcIndex++)
+                {
+                    drawnValue -= expFitFunc[funcIndex];
+                    if(drawnValue < 0)
+                    {
+                        selectedParents[0, parentIndex] = parents[0, funcIndex];
+                        selectedParents[1, parentIndex] = parents[1, funcIndex];
+                        break;
+                    }
+                }
+            }
+            return selectedParents;
+        }
+
         public void Fit()
         {
+            for(int generation = 0; generation<algorithmParameters.Generations; generation++)
+            {
+                //For each element of population
+                for(int populationIndex = 0; populationIndex<algorithmParameters.Population; populationIndex++)
+                {
+                    //Convert binary to int
+                    int xInt = binary2Int(Chromosomes[generation, 0, populationIndex]);
+                    int yInt = binary2Int(Chromosomes[generation, 1, populationIndex]);
 
+                    //Relax int to double
+                    double[] relaxedValues = relaxationFuncion(xInt, yInt);
+
+                    //Calculate function
+                    double fxy = fitnessFunction(relaxedValues[0], relaxedValues[1]);
+
+                    ChromosomeValues[generation][0][populationIndex] = relaxedValues[0];
+                    ChromosomeValues[generation][1][populationIndex] = relaxedValues[1];
+                    ChromosomeValues[generation][2][populationIndex] = fxy;
+
+                    //Get best, mean, median value
+                }
+                ChromosomeValues[generation][2]
+            }
         }
     }
 }
