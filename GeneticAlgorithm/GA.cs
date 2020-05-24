@@ -17,9 +17,9 @@ namespace GeneticAlgorithm
             this.Chromosomes = new BitArray[algorithmParameters.Generations, 2, algorithmParameters.Population];
             this.ChromosomeValues = new double[algorithmParameters.Generations, 3, algorithmParameters.Population];
 
-            this.BestValues = new double[algorithmParameters.Generations, 3];
-            this.MeanValues = new double[algorithmParameters.Generations, 3];
-            this.MedianValues = new double[algorithmParameters.Generations, 3];
+            this.BestValues = new double[algorithmParameters.Generations];
+            this.MeanValues = new double[algorithmParameters.Generations];
+            this.MedianValues = new double[algorithmParameters.Generations];
 
             // generate first population
 
@@ -29,14 +29,14 @@ namespace GeneticAlgorithm
                 int y = generateRandomValue();
                 BitArray x_genome = int2Binary(x);
                 BitArray y_genome = int2Binary(y);
-                this.Chromosomes[0, 0, individualIndex] = x_genome;
-                this.Chromosomes[0, 1, individualIndex] = y_genome;
+                this.Chromosomes[0,0,individualIndex] = x_genome;
+                this.Chromosomes[0,1,individualIndex] = y_genome;
             }
 
         }
 
-        public BitArray[][][] Chromosomes { get; set; } // generation, {x,y}, population
-        public double[][][] ChromosomeValues { get; set; } // generation, {x,y,, f(x,y)}, value
+        public BitArray[,,] Chromosomes { get; set; } // generation, {x,y}, population
+        public double[,,] ChromosomeValues { get; set; } // generation, {x,y,, f(x,y)}, value
         public double[] BestValues { get; set; } // generation
         public double[] MeanValues { get; set; } // generation
         public double[] MedianValues { get; set; } // generation
@@ -157,10 +157,11 @@ namespace GeneticAlgorithm
 
         public void Fit()
         {
-            for(int generation = 0; generation<algorithmParameters.Generations; generation++)
+            for (int generation = 0; generation < algorithmParameters.Generations; generation++)
             {
+                double[] fxvalues = new double[algorithmParameters.Population];
                 //For each element of population
-                for(int populationIndex = 0; populationIndex<algorithmParameters.Population; populationIndex++)
+                for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex++)
                 {
                     //Convert binary to int
                     int xInt = binary2Int(Chromosomes[generation, 0, populationIndex]);
@@ -172,14 +173,69 @@ namespace GeneticAlgorithm
                     //Calculate function
                     double fxy = fitnessFunction(relaxedValues[0], relaxedValues[1]);
 
-                    ChromosomeValues[generation][0][populationIndex] = relaxedValues[0];
-                    ChromosomeValues[generation][1][populationIndex] = relaxedValues[1];
-                    ChromosomeValues[generation][2][populationIndex] = fxy;
-
-                    //Get best, mean, median value
+                    ChromosomeValues[generation, 0, populationIndex] = relaxedValues[0];
+                    ChromosomeValues[generation, 1, populationIndex] = relaxedValues[1];
+                    ChromosomeValues[generation, 2, populationIndex] = fxy;
+                    fxvalues[populationIndex] = fxy;
                 }
-                ChromosomeValues[generation][2]
+                //Get best, mean, median value
+                if (algorithmParameters.isMaxSearching)
+                {
+                    BestValues[generation] = fxvalues.Max();
+                }
+                else
+                {
+                    BestValues[generation] = fxvalues.Min();
+                }
+                MeanValues[generation] = fxvalues.Average();
+                MedianValues[generation] = getMedian(fxvalues);
+                BitArray[,] parents = new BitArray[2, algorithmParameters.Population];
+                
+                if(generation != algorithmParameters.Generations-1)
+                {
+                    //Select parents for next generation
+                    for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex++)
+                    {
+                        parents[0, populationIndex] = Chromosomes[generation, 0, populationIndex];
+                        parents[1, populationIndex] = Chromosomes[generation, 1, populationIndex];
+                    }
+                    if (!algorithmParameters.isMaxSearching)
+                    {
+                        fxvalues = fxvalues.Select(x => x * -1).ToArray();
+                    }
+                    parents = SelectParents(parents, fxvalues);
+                    for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex+=2)
+                    {
+                        BitArray[] selectedXPair = crossover(parents[0, populationIndex], parents[0, populationIndex + 1]);
+                        BitArray[] selectedYPair = crossover(parents[1, populationIndex], parents[1, populationIndex + 1]);
+                        selectedXPair[0] = mutation(selectedXPair[0]);
+                        selectedXPair[1] = mutation(selectedXPair[1]);
+                        selectedYPair[0] = mutation(selectedYPair[0]);
+                        selectedYPair[1] = mutation(selectedYPair[1]);
+                        Chromosomes[generation, 0, populationIndex] = selectedXPair[0];
+                        Chromosomes[generation, 1, populationIndex] = selectedYPair[0];
+                        Chromosomes[generation, 0, populationIndex+1] = selectedXPair[1];
+                        Chromosomes[generation, 1, populationIndex+1] = selectedYPair[1];
+                    }
+                }
             }
+        }
+        public double getMedian(double[] values)
+        {
+            int numberCount = values.Count();
+            int halfIndex = values.Count() / 2;
+            var sortedNumbers = values.OrderBy(n => n);
+            double median;
+            if ((numberCount % 2) == 0)
+            {
+                median = (sortedNumbers.ElementAt(halfIndex) +
+                    sortedNumbers.ElementAt(halfIndex+1)) / 2;
+            }
+            else
+            {
+                median = sortedNumbers.ElementAt(halfIndex);
+            }
+            return median;
         }
     }
 }

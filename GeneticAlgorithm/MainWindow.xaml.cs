@@ -50,7 +50,7 @@ namespace GeneticAlgorithm
                 int population = (int)dlg.individualsNumber.Value;
                 int generationsNumber = (int)dlg.generationsNumber.Value;
                 int precision = (int)dlg.precision.Value;
-                bool isMinimum = (bool)dlg.minimumSearch.IsChecked & !(bool)dlg.maximumSearch.IsChecked;
+                bool isMaximumSearching = (bool)dlg.maximumSearch.IsChecked;
             }
         }
     }
