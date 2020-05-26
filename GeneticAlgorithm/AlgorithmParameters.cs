@@ -8,7 +8,7 @@ namespace GeneticAlgorithm
 {
     public class AlgorithmParameters
     {
-        public AlgorithmParameters(float crossoverProbability, float mutationProbability, int population, int generations, int precision, bool isMaxSearching)
+        public AlgorithmParameters(double crossoverProbability, double mutationProbability, int population, int generations, int precision, bool isMaxSearching)
         {
             CrossoverProbability = crossoverProbability;
             MutationProbability = mutationProbability;

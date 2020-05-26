@@ -20,5 +20,13 @@ namespace GeneticAlgorithm
             this.xDomain = new Vector(xFirstValue, xLastValue);
             this.yDomain = new Vector(yFirstValue, yLastValue);
         }
+        public void setxDomain(double valueX, double valueY)
+        {
+            xDomain = new Vector(valueX, valueY);
+        }
+        public void setyDomain(double valueX, double valueY)
+        {
+            yDomain = new Vector(valueX, valueY);
+        }
     }
 }

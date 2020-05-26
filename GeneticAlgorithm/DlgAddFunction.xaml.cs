@@ -26,7 +26,7 @@ namespace GeneticAlgorithm
 
         private void AddFunction(object sender, RoutedEventArgs e)
         {
-            Close();
+            DialogResult = true;
         }
     }
 }
