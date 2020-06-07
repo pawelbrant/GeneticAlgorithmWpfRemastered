@@ -90,8 +90,10 @@ namespace GeneticAlgorithm
 
         public double fitnessFunction(double xValue, double yValue)
         {
-            Argument x = new Argument("x = " + xValue.ToString());
-            Argument y = new Argument("y = " + yValue.ToString());
+            String xAltered = xValue.ToString().Replace(',', '.');
+            String yAltered = yValue.ToString().Replace(',', '.');
+            Argument x = new Argument("x = " + xAltered );
+            Argument y = new Argument("y = " + yAltered);
             Expression result = new Expression("f(x,y)", evaluatedFunction.function, x, y);
             return result.calculate();
         }
