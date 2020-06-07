@@ -20,13 +20,15 @@ namespace GeneticAlgorithm
             this.BestValues = new double[algorithmParameters.Generations];
             this.MeanValues = new double[algorithmParameters.Generations];
             this.MedianValues = new double[algorithmParameters.Generations];
-
+            this.random = new Random();
             // generate first population
 
             for(int individualIndex=0; individualIndex<algorithmParameters.Population; individualIndex++)
             {
                 int x = generateRandomValue();
                 int y = generateRandomValue();
+                System.Diagnostics.Debug.WriteLine("X: " + x.ToString());
+                System.Diagnostics.Debug.WriteLine("Y: " + y.ToString());
                 BitArray x_genome = int2Binary(x, this.algorithmParameters.Precision);
                 BitArray y_genome = int2Binary(y, this.algorithmParameters.Precision);
                 this.Chromosomes[0,0,individualIndex] = x_genome;
@@ -40,6 +42,7 @@ namespace GeneticAlgorithm
         public double[] BestValues { get; set; } // generation
         public double[] MeanValues { get; set; } // generation
         public double[] MedianValues { get; set; } // generation
+        public Random random { get; set; }
 
         public AlgorithmParameters algorithmParameters { get; }
         public EvaluatedFunction evaluatedFunction { get; }
@@ -51,7 +54,7 @@ namespace GeneticAlgorithm
             for (int index = 0; index < bitArray.Length; index++)
             {
                 int value = bitArray[index] ? 1 : 0;
-                result += (int)Math.Pow(2, bitArray.Length - 1 - index) * value;
+                result += (int)Math.Pow(2, index) * value;
             }
             return result;
         }
@@ -76,8 +79,7 @@ namespace GeneticAlgorithm
 
         public int generateRandomValue()
         {
-            Random random = new Random();
-            return random.Next(0, (int)Math.Pow(2, algorithmParameters.Precision));
+            return this.random.Next(0, (int)Math.Pow(2, algorithmParameters.Precision));
         }
 
         public double[] relaxationFuncion(int xValue, int yValue)
@@ -152,10 +154,9 @@ namespace GeneticAlgorithm
             {
                 expFitFunc[index] = Math.Exp(fitFunctionValue[index]);
             }
-            Random random = new Random();
             for(int parentIndex = 0; parentIndex<algorithmParameters.Population; parentIndex++)
             {
-                double drawnValue = random.NextDouble() * expFitFunc.Sum();
+                double drawnValue = this.random.NextDouble() * expFitFunc.Sum();
                 for(int funcIndex=0; funcIndex<expFitFunc.Length; funcIndex++)
                 {
                     drawnValue -= expFitFunc[funcIndex];
@@ -227,10 +228,10 @@ namespace GeneticAlgorithm
                         selectedXPair[1] = mutation(selectedXPair[1]);
                         selectedYPair[0] = mutation(selectedYPair[0]);
                         selectedYPair[1] = mutation(selectedYPair[1]);
-                        Chromosomes[generation, 0, populationIndex] = selectedXPair[0];
-                        Chromosomes[generation, 1, populationIndex] = selectedYPair[0];
-                        Chromosomes[generation, 0, populationIndex+1] = selectedXPair[1];
-                        Chromosomes[generation, 1, populationIndex+1] = selectedYPair[1];
+                        Chromosomes[generation+1, 0, populationIndex] = selectedXPair[0];
+                        Chromosomes[generation+1, 1, populationIndex] = selectedYPair[0];
+                        Chromosomes[generation+1, 0, populationIndex+1] = selectedXPair[1];
+                        Chromosomes[generation+1, 1, populationIndex+1] = selectedYPair[1];
                     }
                 }
             }
