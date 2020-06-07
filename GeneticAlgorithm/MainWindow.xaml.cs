@@ -145,10 +145,16 @@ namespace GeneticAlgorithm
         {
 
             FittingDetailsWindow dlg = new FittingDetailsWindow(genericAlgorithmsList[0]);
+            dlg.Owner = this;
             if (dlg.ShowDialog() == true)
             {
 
             }
+        }
+
+        public List<GA> GetGAs()
+        {
+            return genericAlgorithmsList;
         }
     }
 }
