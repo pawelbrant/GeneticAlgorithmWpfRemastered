@@ -134,10 +134,11 @@ namespace GeneticAlgorithm
                     genericAlgorithmsList.Add(new GA(algorithmParameters, evaluatedFunction));
                 }
             }
-            foreach(GA ga in genericAlgorithmsList)
+            Parallel.ForEach(genericAlgorithmsList, (ga) =>
             {
                 ga.Fit();
-            }
+            });
+
             progress.Value += 10;
         }
     }
