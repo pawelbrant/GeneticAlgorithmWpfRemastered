@@ -19,9 +19,11 @@ namespace GeneticAlgorithm
     /// </summary>
     public partial class FittingDetailsWindow : Window
     {
-        public FittingDetailsWindow()
+        public GA GA { get; set; }
+        public FittingDetailsWindow(GA GAInstance)
         {
             InitializeComponent();
+            GA = GAInstance;
         }
     }
 }

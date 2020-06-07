@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:GeneticAlgorithm"
         mc:Ignorable="d"
         Title="Fitting Details" Height="450" Width="700" MinHeight="450" MinWidth="700">
+    <Window.Resources>
+        <local:BoolToStringConverter x:Key="BooleanToStringConverter" FalseValue="Min" TrueValue="Max" />
+    </Window.Resources>
+    
     <TabControl Margin="10 5 10 10">
         <TabItem Header="Function">
             <Grid Margin="2,2,2,2" >
@@ -60,7 +64,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Column="0" IsReadOnly="True">
+                <DataGrid Grid.Column="0" IsReadOnly="True" Name="GenerationsGrid">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Width="*"/>
                         <DataGridTextColumn Header="X value" Width="2*"/>
@@ -79,17 +83,29 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Column="0" Grid.Row="0">Crossover propability:</Label>
-                    <Label Grid.Column="1" Grid.Row="0">Value</Label>
+                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=GA.algorithmParameters.CrossoverProbability, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     <Label Grid.Column="0" Grid.Row="1">Mutation propability:</Label>
-                    <Label Grid.Column="1" Grid.Row="1">Value</Label>
+                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=GA.algorithmParameters.MutationProbability, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     <Label Grid.Column="0" Grid.Row="2">Number of individuals:</Label>
-                    <Label Grid.Column="1" Grid.Row="2">Value</Label>
+                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=GA.algorithmParameters.Population, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     <Label Grid.Column="0" Grid.Row="3">Number of generations</Label>
-                    <Label Grid.Column="1" Grid.Row="3">Value</Label>
-                    <Label Grid.Column="0" Grid.Row="4">Searched value:</Label>
-                    <Label Grid.Column="1" Grid.Row="4">Min/Max</Label>
+                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=GA.algorithmParameters.Generations, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                    <Label Grid.Column="0" Grid.Row="4">Precision</Label>
+                    <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=GA.algorithmParameters.Precision, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                    <Label Grid.Column="0" Grid.Row="5">Searched value:</Label>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding
+                        Path=GA.algorithmParameters.isMaxSearching,
+                        RelativeSource={RelativeSource FindAncestor,
+                        AncestorType={x:Type Window}},
+                        Converter={StaticResource BooleanToStringConverter}}"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0 5 0 0">
                     <Grid.ColumnDefinitions>
@@ -107,7 +123,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Header="Plots" RenderTransformOrigin="0.5,0.509">
+        <TabItem Header="Plots">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

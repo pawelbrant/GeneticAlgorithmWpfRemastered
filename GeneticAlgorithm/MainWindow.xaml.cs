@@ -140,5 +140,15 @@ namespace GeneticAlgorithm
             }
             progress.Value += 10;
         }
+
+        private void ShowDetails_Click(object sender, RoutedEventArgs e)
+        {
+
+            FittingDetailsWindow dlg = new FittingDetailsWindow(genericAlgorithmsList[0]);
+            if (dlg.ShowDialog() == true)
+            {
+
+            }
+        }
     }
 }

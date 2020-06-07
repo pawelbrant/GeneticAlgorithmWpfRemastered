@@ -39,19 +39,18 @@
         </StatusBar>
         <Grid Grid.Row="1" Margin="10 5 10 10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="248*"/>
-                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="513*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">Functions to optimize:</Label>
-            <Label Grid.Column="3" Grid.Row="0">Algorithm parameters:</Label>
-            <DataGrid Grid.Column="0" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="FunctionGrid" ColumnWidth="70"  IsReadOnly="True" MaxWidth="280" Grid.ColumnSpan="2" DisplayMemberPath="">
+            <Label Grid.Column="0" Grid.Row="0">Functions to optimize:</Label>
+            <Label Grid.Column="2" Grid.Row="0">Algorithm parameters:</Label>
+            <DataGrid Grid.Column="0" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="FunctionGrid" ColumnWidth="70"  IsReadOnly="True" MaxWidth="280" DisplayMemberPath="">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="Edit_Function"/>
@@ -61,7 +60,7 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid Grid.Column="2" Grid.Row="1" Margin="10 0 10 0">
+            <Grid Grid.Column="1" Grid.Row="1" Margin="10 0 10 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -69,12 +68,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Margin="0 0 0 5" Padding="5 5 5 5">Show details</Button>
+                <Button Grid.Row="0" Margin="0 0 0 5" Padding="5 5 5 5" Name="ShowDetails" Click="ShowDetails_Click">Show details</Button>
                 <Button Grid.Row="1" Margin="0 5 0 5" Padding="5 5 5 5">Export</Button>
                 <Button Grid.Row="2" Margin="0 5 0 5" Padding="5 20 5 20" Name="Fit" Click="Fitting_click">Fit</Button>
                 <Button Grid.Row="4" Margin="0 5 0 0" Padding="5 5 5 5" Name="Remove" Click="Remove_Items">Remove</Button>
             </Grid>
-            <DataGrid Grid.Column="3" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="AlgorithmGrid" IsReadOnly="True">
+            <DataGrid Grid.Column="2" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="AlgorithmGrid" IsReadOnly="True">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="Edit_Algorithm"/>
@@ -84,8 +83,8 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="AddFunctionBtn" Grid.Column="0" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Click="AddFunctionBtn_Click" Grid.ColumnSpan="2">Add function</Button>
-            <Button x:Name="AddParametersBtn" Grid.Column="3" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Click="AddParametersBtn_Click">Add algorithm parameters</Button>
+            <Button x:Name="AddFunctionBtn" Grid.Column="0" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Click="AddFunctionBtn_Click">Add function</Button>
+            <Button x:Name="AddParametersBtn" Grid.Column="2" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Click="AddParametersBtn_Click">Add algorithm parameters</Button>
             
         </Grid>
         
