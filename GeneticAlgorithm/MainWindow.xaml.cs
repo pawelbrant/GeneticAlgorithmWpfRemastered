@@ -30,6 +30,7 @@ namespace GeneticAlgorithm
         }
         private List<EvaluatedFunction> evaluatedFunctionsList = new List<EvaluatedFunction>();
         private List<AlgorithmParameters> algorithmParametersList = new List<AlgorithmParameters>();
+        private List<GA> genericAlgorithmsList = new List<GA>();
         private void AddFunctionBtn_Click(object sender, RoutedEventArgs e)
         {
             EvaluatedFunction evaluatedFunction;
@@ -44,6 +45,7 @@ namespace GeneticAlgorithm
                 evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
                 evaluatedFunctionsList.Add(evaluatedFunction);
                 FunctionGrid.Items.Refresh();
+                
             }
         }
 
@@ -119,6 +121,24 @@ namespace GeneticAlgorithm
                 AlgorithmGrid.Items.Refresh();
             }
         }
-            
+
+        private void Fitting_click(object sender, RoutedEventArgs e)
+        {
+            progress.Value = 0;
+            progress.Maximum = evaluatedFunctionsList.Count * AlgorithmGrid.SelectedItems.Count+10;
+            foreach (EvaluatedFunction evaluatedFunction in evaluatedFunctionsList)
+            {              
+                foreach (AlgorithmParameters algorithmParameters in AlgorithmGrid.SelectedItems)
+                {
+                    progress.Value++;
+                    genericAlgorithmsList.Add(new GA(algorithmParameters, evaluatedFunction));
+                }
+            }
+            foreach(GA ga in genericAlgorithmsList)
+            {
+                ga.Fit();
+            }
+            progress.Value += 10;
+        }
     }
 }
