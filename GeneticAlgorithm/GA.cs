@@ -27,8 +27,8 @@ namespace GeneticAlgorithm
             {
                 int x = generateRandomValue();
                 int y = generateRandomValue();
-                BitArray x_genome = int2Binary(x);
-                BitArray y_genome = int2Binary(y);
+                BitArray x_genome = int2Binary(x, this.algorithmParameters.Precision);
+                BitArray y_genome = int2Binary(y, this.algorithmParameters.Precision);
                 this.Chromosomes[0,0,individualIndex] = x_genome;
                 this.Chromosomes[0,1,individualIndex] = y_genome;
             }
@@ -56,9 +56,22 @@ namespace GeneticAlgorithm
             return result;
         }
 
-        public static BitArray int2Binary(int value)
+        public static BitArray int2Binary(int value, int precision)
         {
-            return new BitArray(new int[] { value });
+            BitArray result = new BitArray(precision);
+            for(int i = 0; i<precision; i++)
+            {
+                if(value%2==1)
+                {
+                    result[i] = true;
+                }
+                else
+                {
+                    result[i] = false;
+                }
+                value = value / 2;
+            }
+            return result;
         }
 
         public int generateRandomValue()

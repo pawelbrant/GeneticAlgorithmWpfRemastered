@@ -40,10 +40,5 @@ namespace GeneticAlgorithm
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
-        public string Expression()
-        {
-            Expression e1 = new Expression("f(x,y)", function);
-            return e1.ToString();
-        }
     }
 }
