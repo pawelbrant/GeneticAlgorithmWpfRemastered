@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="Export to PDF"/>
+                <MenuItem Header="Export to PDF" Click="ExportToPDF"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Copy"/>

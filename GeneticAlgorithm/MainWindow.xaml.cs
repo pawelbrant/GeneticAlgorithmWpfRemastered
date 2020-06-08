@@ -14,6 +14,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System.ComponentModel;
+using System.Drawing;
+using Syncfusion.Pdf.Tables;
+using System.Data;
+using System.Security.AccessControl;
 
 namespace GeneticAlgorithm
 {
@@ -141,6 +148,147 @@ namespace GeneticAlgorithm
             });
 
             progress.Value += 10;
+        }
+
+        private void ExportToPDF(object sender, RoutedEventArgs e)
+        {
+            if (!evaluatedFunctionsList.Any() || !algorithmParametersList.Any())
+            {
+                if (MessageBox.Show("Add parameters first", "No parameters error", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
+                {
+                    return;
+                }
+            }
+            using (PdfDocument document = new PdfDocument())
+            {
+                foreach(var ga in genericAlgorithmsList)
+                {
+                    
+                    //Add a page to the document
+                    PdfPage page = document.Pages.Add();
+
+                    ////Create PDF graphics for a page
+                    PdfGraphics graphics = page.Graphics;
+
+                    //Set the standard font
+                    PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 13);
+
+                    //Draw the text
+                    String functionString = "Function: " + 
+                        ga.evaluatedFunction.function.getFunctionExpressionString() +
+                        " x:<" + ga.evaluatedFunction.xDomain.X.ToString() + 
+                        "," + ga.evaluatedFunction.xDomain.Y.ToString() +
+                        " > y:<" + ga.evaluatedFunction.yDomain.X.ToString() + 
+                        "," + ga.evaluatedFunction.yDomain.Y.ToString()+">";
+
+                    graphics.DrawString(functionString, font, PdfBrushes.Black, new PointF(0, 0));
+
+
+                    //Draw the text
+                    graphics.DrawString("Parameters", font, PdfBrushes.Black, new PointF(0, 20));
+
+
+                    // Create a PdfLightTable.
+
+                    PdfLightTable pdfLightTable = new PdfLightTable();
+
+                    // Initialize DataTable to assign as DateSource to the light table.
+
+                    DataTable table = new DataTable();
+
+                    //Include columns to the DataTable.
+
+                    table.Columns.Add("Crossover probability");
+                    table.Columns.Add("Mutation probability");
+                    table.Columns.Add("Population");
+                    table.Columns.Add("Generations");
+                    table.Columns.Add("Precision");
+                    table.Columns.Add("IsMaxSearching");
+                    //Include rows to the DataTable.
+
+                    table.Rows.Add(new string[] {
+                        ga.algorithmParameters.CrossoverProbability.ToString(),
+                        ga.algorithmParameters.MutationProbability.ToString(), 
+                        ga.algorithmParameters.Population.ToString(), 
+                        ga.algorithmParameters.Generations.ToString(), 
+                        ga.algorithmParameters.Precision.ToString(),
+                        ga.algorithmParameters.isMaxSearching.ToString()
+                    });
+
+                    //Assign data source.
+
+                    pdfLightTable.DataSource = table;
+                    pdfLightTable.Style.ShowHeader = true;
+
+                    //Draw PdfLightTable.
+
+                    pdfLightTable.Draw(page, new PointF(0, 40));
+
+                        //Draw the text
+                    graphics.DrawString("Summary", font, PdfBrushes.Black, new PointF(0, 60));
+
+                    // Create a PdfLightTable.
+
+                    PdfLightTable summary = new PdfLightTable();
+
+                    // Initialize DataTable to assign as DateSource to the light table.
+
+                    DataTable summaryTable = new DataTable();
+
+                    //Include columns to the DataTable.
+
+                    summaryTable.Columns.Add("Generation");
+                    summaryTable.Columns.Add("Best solution");
+                    summaryTable.Columns.Add("Median solution");
+                    summaryTable.Columns.Add("Mean solution");
+                    
+                    //Include rows to the DataTable.
+                    for(int generation = 0;  generation<ga.algorithmParameters.Generations; generation++)
+                    {
+                        summaryTable.Rows.Add(new string[] {
+                        (generation+1).ToString(),
+                        ga.BestValues[generation].ToString(),
+                        ga.MedianValues[generation].ToString(),
+                        ga.MeanValues[generation].ToString(),
+                   });
+                    }
+                    
+
+                    //Assign data source.
+
+                    summary.DataSource = summaryTable;
+                    summary.Style.ShowHeader = true;
+
+                    //Draw PdfLightTable.
+
+                    summary.Draw(page, new PointF(0, 80));
+                }
+
+                //Save the document
+                document.Save("Output.pdf");
+
+                #region View the Workbook
+                //Message box confirmation to view the created document.
+                if (MessageBox.Show("Do you want to view the PDF?", "PDF has been created",
+                    MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        //Launching the Excel file using the default Application.[MS Excel Or Free ExcelViewer]
+                        System.Diagnostics.Process.Start("Output.pdf");
+
+                        //Exit
+                        Close();
+                    }
+                    catch (Win32Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+                else
+                    Close();
+                #endregion
+            }
         }
     }
 }
