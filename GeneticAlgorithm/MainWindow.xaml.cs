@@ -53,6 +53,7 @@ namespace GeneticAlgorithm
                 double yLastValue = (double)dlg.yLastValue.Value;
                 evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
                 evaluatedFunctionsList.Add(evaluatedFunction);
+                FunctionGrid.Columns[0].Visibility = Visibility.Hidden;
                 FunctionGrid.Items.Refresh();
                 
             }
@@ -131,7 +132,7 @@ namespace GeneticAlgorithm
             {
                 ga.Fit();
             });
-
+            resultsList.ItemsSource = genericAlgorithmsList;
             progress.Value += 10;
         }
 

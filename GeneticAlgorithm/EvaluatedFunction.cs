@@ -22,11 +22,6 @@ namespace GeneticAlgorithm
         public Vector xDomain { get; set; }
         public Vector yDomain { get; set; }
         public Function function { get; set; }
-        public string Expression()
-        {
-
-            return function.getFunctionExpressionString();
-        }
         public EvaluatedFunction(string function, double xFirstValue, double xLastValue, double yFirstValue, double yLastValue)
         {
             this.function = new Function(function);
