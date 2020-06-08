@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace GeneticAlgorithm
@@ -23,6 +24,9 @@ namespace GeneticAlgorithm
     public partial class FittingDetailsWindow : Window, INotifyPropertyChanged
     {
         private GA gA;
+        public ChartValues<HeatPoint> Values { get; set; }
+        public double[] XDomain { get; set; }
+        public double[] YDomain { get; set; }
         public GA GA
         {
             get
@@ -43,10 +47,28 @@ namespace GeneticAlgorithm
             InitializeComponent();
             GA = GAInstance;
             Summary();
+            DrawHeatMap();
             Reload_Individuals();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public void initDomains()
+        {
+            XDomain = new double[(int)(GA.evaluatedFunction.xDomain.Y - GA.evaluatedFunction.xDomain.X)];
+            YDomain = new double[(int)(GA.evaluatedFunction.yDomain.Y - GA.evaluatedFunction.yDomain.X)];
+            int j = 0;
+            for (double i = GA.evaluatedFunction.xDomain.X; i <= GA.evaluatedFunction.xDomain.Y; i++)
+            {
+                XDomain[j] = (int)i;
+                j++;
+            }
+            j = 0;
+            for (double i = GA.evaluatedFunction.yDomain.X; i <= GA.evaluatedFunction.yDomain.Y; i++)
+            {
+                YDomain[j] = (int)i;
+                j++;
+            }
+        }
 
         public void OnPropertyChanged(string property)
         {
@@ -113,13 +135,17 @@ namespace GeneticAlgorithm
             summaryChart.Series.Add(series[1]);
             summaryChart.Series.Add(series[2]);
         }
-
+        private void DrawHeatMap()
+        {
+            
+        }
         private void GenerationSlider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (GA is null)
                 return;
             Generation = (int)e.NewValue - 1;
             Reload_Individuals();
+            DrawHeatMap();
         }
     }
 }

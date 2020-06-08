@@ -131,7 +131,25 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="0" Source="Media/heatmap.png"></Image>
+                <lvc:CartesianChart Grid.Row="0" Name="HeatMap">
+                    <lvc:CartesianChart.Series>
+                        <lvc:HeatSeries Values="{Binding HeatValues}" DataLabels="true">
+                            
+                        </lvc:HeatSeries>
+                        
+                    </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Labels="{Binding XDomain}">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Labels="{Binding YDomain}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                
                 <Grid Grid.Row="1" Margin="0 5 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
