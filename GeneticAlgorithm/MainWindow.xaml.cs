@@ -35,8 +35,8 @@ namespace GeneticAlgorithm
             InitializeComponent();
             FunctionGrid.ItemsSource = evaluatedFunctionsList;
             AlgorithmGrid.ItemsSource = algorithmParametersList;
-            
         }
+
         private List<EvaluatedFunction> evaluatedFunctionsList = new List<EvaluatedFunction>();
         private List<AlgorithmParameters> algorithmParametersList = new List<AlgorithmParameters>();
         private List<GA> genericAlgorithmsList = new List<GA>();
@@ -53,9 +53,8 @@ namespace GeneticAlgorithm
                 double yLastValue = (double)dlg.yLastValue.Value;
                 evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
                 evaluatedFunctionsList.Add(evaluatedFunction);
-                FunctionGrid.Columns[0].Visibility = Visibility.Hidden;
                 FunctionGrid.Items.Refresh();
-                
+                if (FunctionGrid.Columns.Count == 4) FunctionGrid.Columns[3].Visibility = Visibility.Hidden;
             }
         }
 
@@ -128,7 +127,7 @@ namespace GeneticAlgorithm
                     genericAlgorithmsList.Add(new GA(algorithmParameters, evaluatedFunction));
                 }
             }
-            Parallel.ForEach(genericAlgorithmsList, (ga) =>
+            genericAlgorithmsList.ForEach((ga) =>
             {
                 ga.Fit();
             });
@@ -138,8 +137,10 @@ namespace GeneticAlgorithm
 
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
-
-            FittingDetailsWindow details = new FittingDetailsWindow(genericAlgorithmsList[0]);
+            int index = resultsList.SelectedIndex;
+            if (index == -1)
+                return;
+            FittingDetailsWindow details = new FittingDetailsWindow(genericAlgorithmsList[index]);
             details.Owner = this;
             details.ShowDialog();
         }
