@@ -11,13 +11,13 @@ namespace GeneticAlgorithm
         public int Id { get; }
         public double X { get; }
         public double Y { get; }
-        public double F_value { get; }
+        public double Function_value { get; }
         public Individual(int id, double x, double y, double f_value)
         {
             Id = id;
             X = x;
             Y = y;
-            F_value = f_value;
+            Function_value = f_value;
         }
     }
 }

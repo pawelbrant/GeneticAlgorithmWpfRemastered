@@ -35,6 +35,7 @@ namespace GeneticAlgorithm
                 OnPropertyChanged("GA");
             }
         }
+        public int Generation { get; set; } = 0;
         private List<Individual> Individuals { get; set; }
 
         public FittingDetailsWindow(GA GAInstance)
@@ -42,6 +43,7 @@ namespace GeneticAlgorithm
             InitializeComponent();
             GA = GAInstance;
             Summary();
+            Reload_Individuals();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,7 +56,18 @@ namespace GeneticAlgorithm
 
         private void Reload_Individuals()
         {
-
+            Individuals = new List<Individual>();
+            int id = 1;
+            for (int i = 0; i < GA.algorithmParameters.Population; i++)
+            {
+                Individuals.Add(new Individual(
+                    id,
+                    GA.ChromosomeValues[Generation, 0, i],
+                    GA.ChromosomeValues[Generation, 1, i],
+                    GA.ChromosomeValues[Generation, 2, i]
+                    ));
+                id++;
+            }
             GenerationsGrid.ItemsSource = Individuals;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -99,6 +112,14 @@ namespace GeneticAlgorithm
             summaryChart.Series.Add(series[0]);
             summaryChart.Series.Add(series[1]);
             summaryChart.Series.Add(series[2]);
+        }
+
+        private void GenerationSlider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (GA is null)
+                return;
+            Generation = (int)e.NewValue - 1;
+            Reload_Individuals();
         }
     }
 }
