@@ -7,7 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm"
         mc:Ignorable="d"
-        Title="Genetic Algorithm" Height="600" Width="1200" MinHeight="600" MinWidth="1200">
+        Title="Genetic Algorithm" Height="650" Width="1200" MinHeight="650" MinWidth="1200">
     <Grid>
 
         <Grid.RowDefinitions>
