@@ -33,6 +33,7 @@ namespace GeneticAlgorithm
                 OnPropertyChanged("GA");
             }
         }
+        private List<Individual> Individuals { get; set; }
 
         public FittingDetailsWindow(GA GAInstance)
         {
@@ -48,6 +49,11 @@ namespace GeneticAlgorithm
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
 
+        private void Reload_Individuals()
+        {
+
+            GenerationsGrid.ItemsSource = Individuals;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             GA = (Owner as MainWindow).GetGAs()[0];
