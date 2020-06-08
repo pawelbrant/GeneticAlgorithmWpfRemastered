@@ -88,25 +88,8 @@ namespace GeneticAlgorithm
             FunctionGrid.Items.Refresh();
             AlgorithmGrid.Items.Refresh();
         }
-        private void Edit_Function(object sender, MouseButtonEventArgs e)
-        {
-            DlgAddFunction dlg = new DlgAddFunction();
-            EvaluatedFunction evaluatedFunction = FunctionGrid.SelectedItem as EvaluatedFunction;
-            int indexOfFunction = evaluatedFunctionsList.IndexOf(evaluatedFunction);
-            dlg.functionExpression.Text = evaluatedFunction.function.ToString();
-            dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
-            dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
-            dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
-            dlg.yLastValue.Value = evaluatedFunction.yDomain.Y;
-            if (dlg.ShowDialog() == true)
-            {
-                evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
-                evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
-                evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
-                FunctionGrid.Items.Refresh();
-            }
-        }
-        private void Edit_Algorithm(object sender, MouseButtonEventArgs e)
+       
+        private void Edit_Algorithm(object sender, RoutedEventArgs e)
         {
             DlgAddParameters dlg = new DlgAddParameters();
             AlgorithmParameters algorithmParameters = AlgorithmGrid.SelectedItem as AlgorithmParameters;
@@ -305,6 +288,25 @@ namespace GeneticAlgorithm
                 else
                     Close();
                 #endregion
+            }
+        }
+
+        private void Edit_Function(object sender, RoutedEventArgs e)
+        {
+            DlgAddFunction dlg = new DlgAddFunction();
+            EvaluatedFunction evaluatedFunction = FunctionGrid.SelectedItem as EvaluatedFunction;
+            int indexOfFunction = evaluatedFunctionsList.IndexOf(evaluatedFunction);
+            dlg.functionExpression.Text = evaluatedFunction.function.ToString();
+            dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
+            dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
+            dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
+            dlg.yLastValue.Value = evaluatedFunction.yDomain.Y;
+            if (dlg.ShowDialog() == true)
+            {
+                evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
+                evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
+                evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
+                FunctionGrid.Items.Refresh();
             }
         }
     }
