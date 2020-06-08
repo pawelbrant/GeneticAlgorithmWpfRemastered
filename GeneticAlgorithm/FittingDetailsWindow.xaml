@@ -66,12 +66,6 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <DataGrid Grid.Column="0" IsReadOnly="True" Name="GenerationsGrid">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Width="*"/>
-                        <DataGridTextColumn Header="X value" Width="2*"/>
-                        <DataGridTextColumn Header="Y value" Width="2*"/>
-                        <DataGridTextColumn Header="Function value" Width="2*"/>
-                    </DataGrid.Columns>
                 </DataGrid>
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -126,7 +120,8 @@
                         TickFrequency="1"
                         TickPlacement="BottomRight"
                         Value="{Binding Path=Value, ElementName=GenerationSlider2}"
-                        IsSnapToTickEnabled="True"/>
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="GenerationSlider1_ValueChanged"/>
                 </Grid>
             </Grid>
         </TabItem>
