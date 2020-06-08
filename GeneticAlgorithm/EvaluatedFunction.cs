@@ -15,16 +15,14 @@ namespace GeneticAlgorithm
         public Function function { get; set; }
         public Vector xDomain { get; set; }
         public Vector yDomain { get; set; }
-        public string Expression()
-        {
-            Expression e1 = new Expression("f(x,y)", function);
-            return e1.getExpressionString() + "=" + e1.calculate();
-        }
+        public string expression { get; set; }
+        
         public EvaluatedFunction(string function, double xFirstValue, double xLastValue, double yFirstValue, double yLastValue)
         {
             this.function = new Function(function);
             this.xDomain = new Vector(xFirstValue, xLastValue);
             this.yDomain = new Vector(yFirstValue, yLastValue);
+            this.expression = this.function.getFunctionExpressionString();
         }
         public void setxDomain(double valueX, double valueY)
         {
