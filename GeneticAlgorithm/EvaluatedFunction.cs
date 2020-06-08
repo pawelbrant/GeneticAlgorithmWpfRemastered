@@ -12,9 +12,16 @@ namespace GeneticAlgorithm
 {
     public class EvaluatedFunction
     {
-        public Function function { get; set; }
+        public string Function
+        {
+            get
+            {
+                return function.getFunctionExpressionString();
+            }
+        }
         public Vector xDomain { get; set; }
         public Vector yDomain { get; set; }
+        public Function function { get; set; }
         public string Expression()
         {
             Expression e1 = new Expression("f(x,y)", function);

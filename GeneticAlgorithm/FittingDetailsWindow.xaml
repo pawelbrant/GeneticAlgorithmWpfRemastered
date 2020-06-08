@@ -33,23 +33,28 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel  Grid.Column="0" Orientation="Horizontal" >
                         <Label VerticalAlignment="Center"  >Function:</Label>
-                        <TextBox  VerticalAlignment="Center" IsEnabled="False">sin(sqrt(x^2+y^2))</TextBox>
+                        <TextBox  VerticalAlignment="Center" IsEnabled="False" Text="{Binding Path=GA.evaluatedFunction.Function, Mode=OneWay,
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     </StackPanel>
                     <StackPanel  Grid.Column="1" Orientation="Horizontal">
                         <Label VerticalAlignment="Center"  >X domain =</Label>
                         <Label VerticalAlignment="Center" >[</Label>
-                        <TextBox VerticalAlignment="Center" IsEnabled="False">-1</TextBox>
+                        <TextBox VerticalAlignment="Center" IsEnabled="False" Text="{Binding Path=GA.evaluatedFunction.xDomain.X, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                         <Label VerticalAlignment="Center" >,</Label>
-                        <TextBox VerticalAlignment="Center" IsEnabled="False">1</TextBox>
+                        <TextBox VerticalAlignment="Center" IsEnabled="False" Text="{Binding Path=GA.evaluatedFunction.xDomain.Y, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                         <Label VerticalAlignment="Center" >]</Label>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Label VerticalAlignment="Center">Y domain =</Label>
                         <Label VerticalAlignment="Center">[</Label>
-                        <TextBox VerticalAlignment="Center" IsEnabled="False">-1</TextBox>
+                        <TextBox VerticalAlignment="Center" IsEnabled="False" Text="{Binding Path=GA.evaluatedFunction.yDomain.X, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                         <Label VerticalAlignment="Center">,</Label>
-                        <TextBox VerticalAlignment="Center" IsEnabled="False">1</TextBox>
+                        <TextBox VerticalAlignment="Center" IsEnabled="False" Text="{Binding Path=GA.evaluatedFunction.yDomain.Y, StringFormat={}{0:#},
+                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                         <Label VerticalAlignment="Center">]</Label>
                     </StackPanel>
                 </Grid>
@@ -102,8 +107,6 @@
                         RelativeSource={RelativeSource FindAncestor,
                         AncestorType={x:Type Window}},
                         Converter={StaticResource BooleanToStringConverter}}"/>
-                    <Button Grid.Column="0" Grid.Row="6" Click="Button_Click">prev</Button>
-                    <Button Grid.Column="1" Grid.Row="6" Click="Button_Click_1">next</Button>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0 5 0 0">
                     <Grid.ColumnDefinitions>

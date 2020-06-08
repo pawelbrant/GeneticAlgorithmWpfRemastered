@@ -70,15 +70,7 @@ namespace GeneticAlgorithm
             }
             GenerationsGrid.ItemsSource = Individuals;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            GA = (Owner as MainWindow).GetGAs()[0];
-        }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            GA = (Owner as MainWindow).GetGAs()[1];
-        }
         private void Summary()
         {
             SeriesCollection series = new SeriesCollection();

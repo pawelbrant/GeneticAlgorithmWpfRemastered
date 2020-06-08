@@ -154,12 +154,9 @@ namespace GeneticAlgorithm
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
 
-            FittingDetailsWindow dlg = new FittingDetailsWindow(genericAlgorithmsList[0]);
-            dlg.Owner = this;
-            if (dlg.ShowDialog() == true)
-            {
-
-            }
+            FittingDetailsWindow details = new FittingDetailsWindow(genericAlgorithmsList[0]);
+            details.Owner = this;
+            details.ShowDialog();
         }
 
         public List<GA> GetGAs()
