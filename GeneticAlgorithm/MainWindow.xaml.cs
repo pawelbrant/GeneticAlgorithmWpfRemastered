@@ -35,6 +35,7 @@ namespace GeneticAlgorithm
             InitializeComponent();
             FunctionGrid.ItemsSource = evaluatedFunctionsList;
             AlgorithmGrid.ItemsSource = algorithmParametersList;
+            
         }
         private List<EvaluatedFunction> evaluatedFunctionsList = new List<EvaluatedFunction>();
         private List<AlgorithmParameters> algorithmParametersList = new List<AlgorithmParameters>();
