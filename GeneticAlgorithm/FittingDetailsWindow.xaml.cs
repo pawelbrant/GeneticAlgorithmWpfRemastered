@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace GeneticAlgorithm
@@ -23,6 +24,8 @@ namespace GeneticAlgorithm
     public partial class FittingDetailsWindow : Window, INotifyPropertyChanged
     {
         private GA gA;
+        
+        
         public GA GA
         {
             get
@@ -36,17 +39,26 @@ namespace GeneticAlgorithm
             }
         }
         public int Generation { get; set; } = 0;
+        private SeriesCollection series { get; set; }
+        private SeriesCollection heatseries { get; set; }
         private List<Individual> Individuals { get; set; }
-
+        private List<Individual> plotIndividuals { get; set; }
         public FittingDetailsWindow(GA GAInstance)
         {
             InitializeComponent();
+            
             GA = GAInstance;
+            series = new SeriesCollection();
+            heatseries = new SeriesCollection();
             Summary();
+            
             Reload_Individuals();
+            DrawIndividuals();
+            DrawHeatMap();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+       
 
         public void OnPropertyChanged(string property)
         {
@@ -69,6 +81,26 @@ namespace GeneticAlgorithm
                 id++;
             }
             GenerationsGrid.ItemsSource = Individuals;
+        }
+        private void Reload_PlotIndividuals(int generation)
+        {
+            plotIndividuals = new List<Individual>();
+            int id = 1;
+            for (int i = 0; i < GA.algorithmParameters.Population; i++)
+            {
+                plotIndividuals.Add(new Individual(
+                    id,
+                    GA.ChromosomeValues[generation, 0, i],
+                    GA.ChromosomeValues[generation, 1, i],
+                    GA.ChromosomeValues[generation, 2, i]
+                    ));
+                id++;
+            }
+           
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            GA = (Owner as MainWindow).GetGAs()[0];
         }
 
         private void Summary()
@@ -105,13 +137,66 @@ namespace GeneticAlgorithm
             summaryChart.Series.Add(series[1]);
             summaryChart.Series.Add(series[2]);
         }
+        private void DrawHeatMap()
+        {
+            
+            HeatSeries heatSeries = new HeatSeries();
+            ChartValues<HeatPoint> Values = new ChartValues<HeatPoint>();
+            int xStart=(int)GA.evaluatedFunction.xDomain.X, 
+                xEnd= (int)GA.evaluatedFunction.xDomain.Y, 
+                yStart= (int)GA.evaluatedFunction.yDomain.X,
+                yEnd= (int)GA.evaluatedFunction.yDomain.Y;
 
+            for(int i =xStart;i<xEnd;i++)
+            {
+                for(int j=yStart;j<yEnd;j++)
+                {
+                    Values.Add(new HeatPoint(i,j,GA.fitnessFunction(i,j)));
+                }
+            }
+            heatSeries.Values = Values;
+            heatSeries.Title = "f(x,y) = ";
+            heatseries.Add(heatSeries);
+
+            HeatMap.Series.Add(heatseries[0]);
+        }
+        public void DrawIndividuals()
+        {
+            
+            SeriesCollection series = new SeriesCollection();
+            int generation = (int)GenerationSlider2.Value;
+            LineSeries individuals = new LineSeries()
+            {
+                Title = "Func. Value=",
+                Values = new ChartValues<double>()
+            };
+            Reload_PlotIndividuals(generation-1);
+            series.Add(individuals);
+            for(int i=0;i<plotIndividuals.Count;i++)
+            {
+                series[0].Values.Add(plotIndividuals[i].Function_value);
+            }         
+            if (IndividualsPlot.Series.Count >0)
+            {
+                IndividualsPlot.Series.RemoveAt(0);              
+            }
+            series.Add(individuals);
+            IndividualsPlot.Series.Add(series[0]);
+        }
         private void GenerationSlider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (GA is null)
                 return;
             Generation = (int)e.NewValue - 1;
             Reload_Individuals();
+            
+        }
+
+        private void GenerationSlider_DrawPlot(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (GA is null)
+                return;
+            DrawIndividuals();
         }
     }
 }

@@ -134,7 +134,16 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="0" Source="Media/heatmap.png"></Image>
+                <lvc:CartesianChart Grid.Row="0" Name="IndividualsPlot">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="X Value" ></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Y Value"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+
+                </lvc:CartesianChart>
+                
                 <Grid Grid.Row="1" Margin="0 5 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -149,6 +158,7 @@
                         TickFrequency="1"
                         TickPlacement="BottomRight"
                         IsSnapToTickEnabled="True"
+                        ValueChanged="GenerationSlider_DrawPlot"
                         />
                 </Grid>
             </Grid>
@@ -156,13 +166,24 @@
         <TabItem Header="Summary">
             <lvc:CartesianChart  LegendLocation="Bottom" Grid.Row="0"  Name="summaryChart">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Epoka" ></lvc:Axis>
+                    <lvc:Axis Title="Generation" ></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Wartość"></lvc:Axis>
+                    <lvc:Axis Title="Value"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
             
+        </TabItem>
+        <TabItem Header="Indiv. HeatMap">
+            <lvc:CartesianChart Grid.Row="0" Name="HeatMap">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="X Values" ></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Y Values"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+
+            </lvc:CartesianChart>
         </TabItem>
     </TabControl>
 </Window>

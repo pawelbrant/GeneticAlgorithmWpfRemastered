@@ -24,8 +24,8 @@ namespace GeneticAlgorithm
         public Function function { get; set; }
         public string Expression()
         {
-            Expression e1 = new Expression("f(x,y)", function);
-            return e1.getExpressionString() + "=" + e1.calculate();
+
+            return function.getFunctionExpressionString();
         }
         public EvaluatedFunction(string function, double xFirstValue, double xLastValue, double yFirstValue, double yLastValue)
         {
