@@ -19,17 +19,6 @@
             <MenuItem Header="File">
                 <MenuItem Header="Export to PDF" Click="ExportToPDF"/>
             </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Paste"/>
-            </MenuItem>
-            <MenuItem Header="Fitting">
-                <MenuItem Header="Single mode"/>
-                <MenuItem Header="Batch mode"/>
-            </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="About"/>
-            </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2">
             <StatusBarItem>
@@ -63,18 +52,16 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" Margin="0 0 0 5" Padding="5 5 5 5" Name="ShowDetails" Click="ShowDetails_Click">Show details</Button>
-                <Button Grid.Row="1" Margin="0 5 0 5" Padding="5 5 5 5">Export</Button>
-                <Button Grid.Row="2" Margin="0 5 0 5" Padding="5 20 5 20" Name="Fit" Click="Fitting_click">Fit</Button>
-                <Button Grid.Row="4" Margin="0 5 0 0" Padding="5 5 5 5" Name="Edit_Alg_btn" Click="Edit_Algorithm">Edit Algorithm</Button>
-                <Button Grid.Row="5" Margin="0 5 0 0" Padding="5 5 5 5" Name="Edit_Func_btn" Click="Edit_Function">Edit Function</Button>
-                <Button Grid.Row="6" Margin="0 5 0 0" Padding="5 5 5 5" Name="Remove" Click="Remove_Items">Remove</Button>
+                <Button Grid.Row="1" Margin="0 5 0 5" Padding="5 20 5 20" Name="Fit" Click="Fitting_click">Fit</Button>
+                <Button Grid.Row="3" Margin="0 5 0 0" Padding="5 5 5 5" Name="Edit_Alg_btn" Click="Edit_Algorithm">Edit Algorithm</Button>
+                <Button Grid.Row="4" Margin="0 5 0 0" Padding="5 5 5 5" Name="Edit_Func_btn" Click="Edit_Function">Edit Function</Button>
+                <Button Grid.Row="5" Margin="0 5 0 0" Padding="5 5 5 5" Name="Remove" Click="Remove_Items">Remove</Button>
             </Grid>
             <DataGrid Grid.Column="2" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="AlgorithmGrid" IsReadOnly="True">
                 

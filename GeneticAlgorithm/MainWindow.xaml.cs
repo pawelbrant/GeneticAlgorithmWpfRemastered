@@ -132,6 +132,7 @@ namespace GeneticAlgorithm
                 ga.Fit();
             });
             resultsList.ItemsSource = genericAlgorithmsList;
+            resultsList.Items.Refresh();
             progress.Value += 10;
         }
 
@@ -296,7 +297,7 @@ namespace GeneticAlgorithm
             DlgAddFunction dlg = new DlgAddFunction();
             EvaluatedFunction evaluatedFunction = FunctionGrid.SelectedItem as EvaluatedFunction;
             int indexOfFunction = evaluatedFunctionsList.IndexOf(evaluatedFunction);
-            dlg.functionExpression.Text = evaluatedFunction.function.ToString();
+            dlg.functionExpression.Text = evaluatedFunction.Function;
             dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
             dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
             dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
