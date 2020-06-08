@@ -2,13 +2,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GeneticAlgorithm
 {
-    public class GA
+    public class GA : INotifyPropertyChanged
     {
         public GA(AlgorithmParameters algorithmParameters, EvaluatedFunction evaluatedFunction)
         {
@@ -252,6 +253,45 @@ namespace GeneticAlgorithm
                 median = sortedNumbers.ElementAt(halfIndex);
             }
             return median;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this,
+                new PropertyChangedEventArgs(property));
+        }
+
+        public string geneticAlgorithmResults
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Results for function ");
+                sb.Append(evaluatedFunction.function.getFunctionExpressionString());
+                sb.Append(" x: <");
+                sb.Append(evaluatedFunction.xDomain.X.ToString());
+                sb.Append(",");
+                sb.Append(evaluatedFunction.xDomain.Y.ToString());
+                sb.Append("> y: <");
+                sb.Append(evaluatedFunction.yDomain.X.ToString());
+                sb.Append(",");
+                sb.Append(evaluatedFunction.yDomain.Y.ToString());
+                sb.Append("> CP: ");
+                sb.Append(algorithmParameters.CrossoverProbability.ToString());
+                sb.Append(" MP: ");
+                sb.Append(algorithmParameters.MutationProbability.ToString());
+                sb.Append(" Pop: ");
+                sb.Append(algorithmParameters.Population.ToString());
+                sb.Append(" Gen: ");
+                sb.Append(algorithmParameters.Generations.ToString());
+                sb.Append(" Prec: ");
+                sb.Append(algorithmParameters.Precision.ToString());
+                sb.Append(" Max: ");
+                sb.Append(algorithmParameters.isMaxSearching.ToString());
+                return sb.ToString();
+            }
         }
     }
 }

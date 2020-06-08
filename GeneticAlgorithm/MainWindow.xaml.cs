@@ -130,7 +130,7 @@ namespace GeneticAlgorithm
             {
                 ga.Fit();
             });
-
+            resultsList.ItemsSource = genericAlgorithmsList;
             progress.Value += 10;
         }
 
