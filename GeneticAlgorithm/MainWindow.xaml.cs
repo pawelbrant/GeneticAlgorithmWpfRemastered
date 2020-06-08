@@ -124,6 +124,7 @@ namespace GeneticAlgorithm
 
         private void Fitting_click(object sender, RoutedEventArgs e)
         {
+            genericAlgorithmsList.Clear();
             progress.Value = 0;
             progress.Maximum = evaluatedFunctionsList.Count * AlgorithmGrid.SelectedItems.Count+10;
             foreach (EvaluatedFunction evaluatedFunction in evaluatedFunctionsList)

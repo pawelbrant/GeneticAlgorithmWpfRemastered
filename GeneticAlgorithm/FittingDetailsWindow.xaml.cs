@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace GeneticAlgorithm
 {
@@ -38,6 +40,7 @@ namespace GeneticAlgorithm
         {
             InitializeComponent();
             GA = GAInstance;
+            Summary();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,6 +59,40 @@ namespace GeneticAlgorithm
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GA = (Owner as MainWindow).GetGAs()[1];
+        }
+        private void Summary()
+        {
+            SeriesCollection series = new SeriesCollection();
+            LineSeries bestValues = new LineSeries
+            {
+                Title = "Best Values",
+                Values = new ChartValues<double>(),
+
+            };
+
+            LineSeries medianValues = new LineSeries()
+            {
+                Title = "Median Values",
+                Values = new ChartValues<double>(),
+
+            };
+            LineSeries meanValues = new LineSeries() {
+                Title = "Mean Values",
+                Values = new ChartValues<double>(),
+
+            };
+            series.Add(bestValues);
+            series.Add(medianValues);
+            series.Add(meanValues);
+            for(int i=0;i<GA.algorithmParameters.Generations;i++)
+            {
+                series[0].Values.Add(GA.BestValues[i]);
+                series[1].Values.Add(GA.MedianValues[i]);
+                series[2].Values.Add(GA.MeanValues[i]);
+            }
+            summaryChart.Series.Add(series[0]);
+            summaryChart.Series.Add(series[1]);
+            summaryChart.Series.Add(series[2]);
         }
     }
 }
