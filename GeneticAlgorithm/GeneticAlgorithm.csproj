@@ -130,6 +130,7 @@
       <DependentUpon>FunctionDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GA.cs" />
+    <Compile Include="Individual.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
