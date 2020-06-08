@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm"
         mc:Ignorable="d"
@@ -155,7 +156,15 @@
             </Grid>
         </TabItem>
         <TabItem Header="Summary">
-            <Image Grid.Row="0" Source="Media/plot.png"></Image>
+            <lvc:CartesianChart  LegendLocation="Bottom" Grid.Row="0"  Name="summaryChart">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Epoka" ></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Wartość"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+            
         </TabItem>
     </TabControl>
 </Window>
