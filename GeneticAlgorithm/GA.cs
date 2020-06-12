@@ -180,6 +180,8 @@ namespace GeneticAlgorithm
                 //For each element of population
                 for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex++)
                 {
+                    System.Diagnostics.Debug.WriteLine("Chromosome " + populationIndex.ToString() + " X: " + printBinary(Chromosomes[generation, 0, populationIndex]));
+                    System.Diagnostics.Debug.WriteLine("Chromosome " + populationIndex.ToString() + " Y: " + printBinary(Chromosomes[generation, 1, populationIndex]));
                     //Convert binary to int
                     int xInt = binary2Int(Chromosomes[generation, 0, populationIndex]);
                     int yInt = binary2Int(Chromosomes[generation, 1, populationIndex]);
@@ -194,6 +196,7 @@ namespace GeneticAlgorithm
                     ChromosomeValues[generation, 1, populationIndex] = relaxedValues[1];
                     ChromosomeValues[generation, 2, populationIndex] = fxy;
                     fxvalues[populationIndex] = fxy;
+                    System.Diagnostics.Debug.WriteLine("Chromosome " + populationIndex.ToString() + " values X: " + relaxedValues[0].ToString() + " Y: " + relaxedValues[1].ToString() + " f: " + fxy.ToString());
                 }
                 //Get best, mean, median value
                 if (algorithmParameters.isMaxSearching)
@@ -207,8 +210,8 @@ namespace GeneticAlgorithm
                 MeanValues[generation] = fxvalues.Average();
                 MedianValues[generation] = getMedian(fxvalues);
                 BitArray[,] parents = new BitArray[2, algorithmParameters.Population];
-                
-                if(generation != algorithmParameters.Generations-1)
+
+                if (generation != algorithmParameters.Generations - 1)
                 {
                     //Select parents for next generation
                     for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex++)
@@ -292,6 +295,23 @@ namespace GeneticAlgorithm
                 sb.Append(algorithmParameters.isMaxSearching.ToString());
                 return sb.ToString();
             }
+        }
+        public static string printBinary(BitArray value)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (bool b in value)
+            {
+                if (b)
+                {
+                    sb.Append("1");
+                }
+                else
+                {
+                    sb.Append("0");
+                }
+            }
+            return sb.ToString();
         }
     }
 }
