@@ -176,6 +176,7 @@ namespace GeneticAlgorithm
         {
             for (int generation = 0; generation < algorithmParameters.Generations; generation++)
             {
+                System.Diagnostics.Debug.WriteLine("Generation " + generation.ToString());
                 double[] fxvalues = new double[algorithmParameters.Population];
                 //For each element of population
                 for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex++)
@@ -226,8 +227,12 @@ namespace GeneticAlgorithm
                     parents = SelectParents(parents, fxvalues);
                     for (int populationIndex = 0; populationIndex < algorithmParameters.Population; populationIndex+=2)
                     {
+                        System.Diagnostics.Debug.WriteLine("Parent: " + populationIndex.ToString() + " before crossover: " + printBinary(parents[0, populationIndex]));
+                        System.Diagnostics.Debug.WriteLine("Parent: " + (populationIndex+1).ToString() + " before crossover: " + printBinary(parents[0, populationIndex+1]));
+
                         BitArray[] selectedXPair = crossover(parents[0, populationIndex], parents[0, populationIndex + 1]);
                         BitArray[] selectedYPair = crossover(parents[1, populationIndex], parents[1, populationIndex + 1]);
+
                         selectedXPair[0] = mutation(selectedXPair[0]);
                         selectedXPair[1] = mutation(selectedXPair[1]);
                         selectedYPair[0] = mutation(selectedYPair[0]);
@@ -236,6 +241,9 @@ namespace GeneticAlgorithm
                         Chromosomes[generation+1, 1, populationIndex] = selectedYPair[0];
                         Chromosomes[generation+1, 0, populationIndex+1] = selectedXPair[1];
                         Chromosomes[generation+1, 1, populationIndex+1] = selectedYPair[1];
+
+                        System.Diagnostics.Debug.WriteLine("Parent: " + populationIndex.ToString() + " after crossover X:" + printBinary(selectedXPair[0]) + "  Y: " + printBinary(selectedYPair[0]));
+                        System.Diagnostics.Debug.WriteLine("Parent: " + (populationIndex + 1).ToString() + " after crossover X:" + printBinary(selectedXPair[1]) + "  Y: " + printBinary(selectedYPair[1]));
                     }
                 }
             }
