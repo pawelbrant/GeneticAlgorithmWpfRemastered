@@ -125,11 +125,11 @@ namespace GeneticAlgorithm
             {
                 int crossoverIndex = random.Next(0, firstParent.Length - 1);
 
-                firstOffspring = CopySlice(firstParent, 0, crossoverIndex);
-                firstOffspring = CopySlice(secondParent, crossoverIndex, secondParent.Length - crossoverIndex);
+                firstOffspring = CopySlice(firstParent, firstOffspring, 0, crossoverIndex);
+                firstOffspring = CopySlice(secondParent, firstOffspring, crossoverIndex, secondParent.Length - crossoverIndex);
 
-                secondOffspring = CopySlice(secondParent, 0, crossoverIndex);
-                secondOffspring = CopySlice(firstParent, crossoverIndex, firstParent.Length - crossoverIndex);
+                secondOffspring = CopySlice(secondParent, secondOffspring, 0, crossoverIndex);
+                secondOffspring = CopySlice(firstParent, secondOffspring, crossoverIndex, firstParent.Length - crossoverIndex);
             }
             BitArray[] results = new BitArray[2];
             results[0] = firstOffspring;
@@ -137,14 +137,13 @@ namespace GeneticAlgorithm
             return results;
         }
 
-        public static BitArray CopySlice(BitArray source, int offset, int size)
+        public static BitArray CopySlice(BitArray source, BitArray destination, int offset, int size)
         {
-            BitArray results = new BitArray(source.Length);
             for (int i = 0; i < size; i++)
             {
-                results[offset + i] = source[offset + i];
+                destination[offset + i] = source[offset + i];
             }
-            return results;
+            return destination;
         }
 
         public BitArray[,] SelectParents(BitArray[,]parents, double[] fitFunctionValue)
