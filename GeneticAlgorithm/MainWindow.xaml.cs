@@ -40,7 +40,7 @@ namespace GeneticAlgorithm
         private List<EvaluatedFunction> evaluatedFunctionsList = new List<EvaluatedFunction>();
         private List<AlgorithmParameters> algorithmParametersList = new List<AlgorithmParameters>();
         private List<GA> genericAlgorithmsList = new List<GA>();
-        private void AddFunctionBtn_Click(object sender, RoutedEventArgs e)
+        private void AddFunction(object sender, RoutedEventArgs e)
         {
             EvaluatedFunction evaluatedFunction;
             DlgAddFunction dlg = new DlgAddFunction();
@@ -58,7 +58,7 @@ namespace GeneticAlgorithm
             }
         }
 
-        private void AddParametersBtn_Click(object sender, RoutedEventArgs e)
+        private void AddParameters(object sender, RoutedEventArgs e)
         {
             DlgAddParameters dlg = new DlgAddParameters();
             AlgorithmParameters algorithmParameters;
@@ -89,7 +89,15 @@ namespace GeneticAlgorithm
             FunctionGrid.Items.Refresh();
             AlgorithmGrid.Items.Refresh();
         }
-       
+
+        private void CanExecuteRemoveItems(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (AlgorithmGrid != null && FunctionGrid != null)
+            {
+                e.CanExecute = AlgorithmGrid.SelectedItems.Count != 0 || FunctionGrid.SelectedItems.Count != 0;
+            }
+        }
+
         private void Edit_Algorithm(object sender, RoutedEventArgs e)
         {
             DlgAddParameters dlg = new DlgAddParameters();
@@ -113,13 +121,21 @@ namespace GeneticAlgorithm
                 AlgorithmGrid.Items.Refresh();
             }
         }
+        private void CanExecuteEditAlgorithm(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (AlgorithmGrid != null)
+            {
+                e.CanExecute = AlgorithmGrid.SelectedItems.Count != 0;
+            }
+        }
 
-        private void Fitting_click(object sender, RoutedEventArgs e)
+
+        private void Fitting(object sender, RoutedEventArgs e)
         {
             genericAlgorithmsList.Clear();
             progress.Value = 0;
-            progress.Maximum = evaluatedFunctionsList.Count * AlgorithmGrid.SelectedItems.Count+10;
-            foreach (EvaluatedFunction evaluatedFunction in evaluatedFunctionsList)
+            progress.Maximum = FunctionGrid.SelectedItems.Count * AlgorithmGrid.SelectedItems.Count+10;
+            foreach (EvaluatedFunction evaluatedFunction in FunctionGrid.SelectedItems)
             {              
                 foreach (AlgorithmParameters algorithmParameters in AlgorithmGrid.SelectedItems)
                 {
@@ -135,8 +151,15 @@ namespace GeneticAlgorithm
             resultsList.Items.Refresh();
             progress.Value += 10;
         }
+        private void CanExecuteFit(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (AlgorithmGrid != null && FunctionGrid !=null)
+            {
+                e.CanExecute = AlgorithmGrid.SelectedItems.Count != 0 && FunctionGrid.SelectedItems.Count != 0;
+            }
+        }
 
-        private void ShowDetails_Click(object sender, RoutedEventArgs e)
+        private void ShowDetails(object sender, RoutedEventArgs e)
         {
             int index = resultsList.SelectedIndex;
             if (index == -1)
@@ -144,6 +167,13 @@ namespace GeneticAlgorithm
             FittingDetailsWindow details = new FittingDetailsWindow(genericAlgorithmsList[index]);
             details.Owner = this;
             details.ShowDialog();
+        }
+        private void CanExecuteShowDetails(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (resultsList != null)
+            {
+                e.CanExecute = resultsList.SelectedItems.Count != 0;
+            }
         }
 
         public List<GA> GetGAs()
@@ -292,6 +322,11 @@ namespace GeneticAlgorithm
             }
         }
 
+        private void CanExecuteExportToPDF(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = genericAlgorithmsList.Any();
+        }
+
         private void Edit_Function(object sender, RoutedEventArgs e)
         {
             DlgAddFunction dlg = new DlgAddFunction();
@@ -308,6 +343,13 @@ namespace GeneticAlgorithm
                 evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
                 evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
                 FunctionGrid.Items.Refresh();
+            }
+        }
+        private void CanExecuteEditFunction(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (FunctionGrid != null)
+            {
+                e.CanExecute = FunctionGrid.SelectedItems.Count != 0;
             }
         }
     }
