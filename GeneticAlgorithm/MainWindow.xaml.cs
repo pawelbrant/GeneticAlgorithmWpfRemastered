@@ -47,14 +47,14 @@ namespace GeneticAlgorithm
             if (dlg.ShowDialog() == true)
             {
                 string functionExpression = dlg.functionExpression.Text;
-                double xFirstValue = (double)dlg.xFirstValue.Value;
-                double xLastValue = (double)dlg.xLastValue.Value;
-                double yFirstValue = (double)dlg.yFirstValue.Value;
-                double yLastValue = (double)dlg.yLastValue.Value;
-                evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
-                evaluatedFunctionsList.Add(evaluatedFunction);
-                FunctionGrid.Items.Refresh();
-                if (FunctionGrid.Columns.Count == 4) FunctionGrid.Columns[3].Visibility = Visibility.Hidden;
+                double xFirstValue = dlg.FirstValue;
+                //double xLastValue = (double)dlg.xLastValue.Value;
+                //double yFirstValue = (double)dlg.yFirstValue.Value;
+                //double yLastValue = (double)dlg.yLastValue.Value;
+                //evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
+                //evaluatedFunctionsList.Add(evaluatedFunction);
+                //FunctionGrid.Items.Refresh();
+                //if (FunctionGrid.Columns.Count == 4) FunctionGrid.Columns[3].Visibility = Visibility.Hidden;
             }
         }
 
@@ -333,17 +333,17 @@ namespace GeneticAlgorithm
             EvaluatedFunction evaluatedFunction = FunctionGrid.SelectedItem as EvaluatedFunction;
             int indexOfFunction = evaluatedFunctionsList.IndexOf(evaluatedFunction);
             dlg.functionExpression.Text = evaluatedFunction.Function;
-            dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
-            dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
-            dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
-            dlg.yLastValue.Value = evaluatedFunction.yDomain.Y;
-            if (dlg.ShowDialog() == true)
-            {
-                evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
-                evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
-                evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
-                FunctionGrid.Items.Refresh();
-            }
+            //dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
+            //dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
+            //dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
+            //dlg.yLastValue.Value = evaluatedFunction.yDomain.Y;
+            //if (dlg.ShowDialog() == true)
+            //{
+            //    evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
+            //    evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
+            //    evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
+            //    FunctionGrid.Items.Refresh();
+            //}
         }
         private void CanExecuteEditFunction(object sender, CanExecuteRoutedEventArgs e)
         {
