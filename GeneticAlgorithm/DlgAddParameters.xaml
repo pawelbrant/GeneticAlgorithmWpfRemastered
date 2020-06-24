@@ -66,8 +66,8 @@
 
         
         <StackPanel Margin ="5,20,5,5" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="3">
-            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" Click="AddParameters">Add</Button>
-            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" IsCancel="True" >Cancel</Button>
+            <Button Width="auto" Padding="20,5,20,5" Template="{StaticResource animatedButton}" Margin="5,0,5,0" HorizontalAlignment="Right" Click="AddParameters">Add</Button>
+            <Button Width="auto" Padding="20,5,20,5" Template="{StaticResource animatedButton}" Margin="5,0,5,0" HorizontalAlignment="Right" IsCancel="True" >Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>
