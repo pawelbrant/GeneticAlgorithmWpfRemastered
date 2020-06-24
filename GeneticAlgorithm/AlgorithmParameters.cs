@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm
 {
+    [Serializable]
     public class AlgorithmParameters
     {
         public AlgorithmParameters(double crossoverProbability, double mutationProbability, int population, int generations, int precision, bool isMaxSearching)

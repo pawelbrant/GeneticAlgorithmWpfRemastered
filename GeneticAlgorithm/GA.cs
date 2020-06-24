@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm
 {
+    [Serializable]
     public class GA : INotifyPropertyChanged
     {
         public GA(AlgorithmParameters algorithmParameters, EvaluatedFunction evaluatedFunction)

@@ -18,6 +18,8 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="Export to PDF" Click="ExportToPDF"/>
+                <MenuItem Header="Save to file" Click="Save_Click"/>
+                <MenuItem Header="Load from file" Click="Load_Click"/>
             </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2">
@@ -42,10 +44,11 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0">Functions to optimize:</Label>
             <Label Grid.Column="2" Grid.Row="0">Algorithm parameters:</Label>
-            <DataGrid Grid.Column="0" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="FunctionGrid" ColumnWidth="70"  IsReadOnly="True" MaxWidth="280" DisplayMemberPath="">
-                
+            <DataGrid Grid.Column="0" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="FunctionGrid" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-
+                    <DataGridTextColumn Header="Function" Binding="{Binding Path=Function}" Width="*"/>
+                    <DataGridTextColumn Header="xDomain" Binding="{Binding Path=xDomain}" Width="100"/>
+                    <DataGridTextColumn Header="yDomain" Binding="{Binding Path=yDomain}" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Column="1" Grid.Row="1" Margin="10 0 10 0">
@@ -64,7 +67,6 @@
                 <Button Grid.Row="5" Margin="0 5 0 0" Padding="5 5 5 5" Name="Remove" Click="Remove_Items">Remove</Button>
             </Grid>
             <DataGrid Grid.Column="2" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="AlgorithmGrid" IsReadOnly="True">
-                
                 <DataGrid.Columns>
 
                 </DataGrid.Columns>

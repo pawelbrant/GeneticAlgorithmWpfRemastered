@@ -21,6 +21,12 @@ using System.Drawing;
 using Syncfusion.Pdf.Tables;
 using System.Data;
 using System.Security.AccessControl;
+using System.Xml.Serialization;
+using Microsoft.Win32;
+using System.IO;
+using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace GeneticAlgorithm
 {
@@ -307,6 +313,47 @@ namespace GeneticAlgorithm
                 evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
                 evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
                 evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
+                FunctionGrid.Items.Refresh();
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write);
+                formatter.Serialize(stream, new Tuple<List<SimpleFunction>, List<AlgorithmParameters>>(SimpleFunction.ListFromEvaluatedFunction(evaluatedFunctionsList), algorithmParametersList));
+                stream.Close();
+            }
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = null;
+                try
+                {
+                    stream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+                    Tuple<List<SimpleFunction>, List<AlgorithmParameters>> lists = (Tuple<List<SimpleFunction>, List<AlgorithmParameters>>)formatter.Deserialize(stream);
+                    evaluatedFunctionsList.AddRange(SimpleFunction.ConvertToListOfEvaluatedFunction(lists.Item1));
+                    algorithmParametersList.AddRange(lists.Item2);
+                    stream.Close();
+                }
+                catch (FileNotFoundException)
+                {
+                    Debug.WriteLine("FileNotFound");
+                }
+                catch (SerializationException)
+                {
+                    Debug.WriteLine("SerializationException");
+                    stream.Close();
+                }
+                AlgorithmGrid.Items.Refresh();
                 FunctionGrid.Items.Refresh();
             }
         }
