@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Add function" Height="200" Width="800">
+        Title="Add function" Height="200" Width="800" MaxHeight="200" MinHeight="200" MinWidth="400">
     <Window.Resources>
         <RoutedUICommand x:Key="AddFunctionCommand" Text="Add function" />
         <ControlTemplate x:Key="errorTemplate">

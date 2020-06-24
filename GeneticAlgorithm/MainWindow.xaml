@@ -43,9 +43,9 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
+                <MenuItem Header="Export to PDF (Ctrl + P)" Command="{StaticResource ExportToPDFCommand}"/>
                 <MenuItem Header="Save to file" Click="Save_Click"/>
                 <MenuItem Header="Load from file" Click="Load_Click"/>
-                <MenuItem Header="Export to PDF (Ctrl + P)" Command="{StaticResource ExportToPDFCommand}"/>
             </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2">
