@@ -21,10 +21,10 @@ namespace GeneticAlgorithm
     public partial class DlgAddFunction : Window, IDataErrorInfo
     {
 
-        public double XFirstValue { get; set; }
-        public double XLastValue { get; set; }
-        public double YFirstValue { get; set; }
-        public double YLastValue { get; set; }
+        public double? XFirstValue { get; set; }
+        public double? XLastValue { get; set; }
+        public double? YFirstValue { get; set; }
+        public double? YLastValue { get; set; }
 
         public string Error
         {
@@ -53,9 +53,9 @@ namespace GeneticAlgorithm
 
         private void AddFunction(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(XFirstValue);
+            System.Diagnostics.Debug.WriteLine(xFirst.Value);
             System.Diagnostics.Debug.WriteLine(XLastValue);
-            if (XLastValue < XFirstValue || YLastValue < YFirstValue)
+            if (xLast.Value < xFirst.Value || yLast.Value < yFirst.Value)
             {
                 if (MessageBox.Show("End of domain should be greater than a beginning of a domain", "Invalid function domain error", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
                 {
@@ -63,6 +63,10 @@ namespace GeneticAlgorithm
                 }
             }
             DialogResult = true;
+        }
+        private void CanExecuteAddFunction(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = xFirst.Value != null && xLast.Value != null && yFirst.Value != null && yLast.Value != null && !string.IsNullOrWhiteSpace(functionExpression.Text);
         }
     }
 }
