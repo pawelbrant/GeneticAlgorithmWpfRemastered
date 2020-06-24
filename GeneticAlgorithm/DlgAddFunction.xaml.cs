@@ -18,40 +18,31 @@ namespace GeneticAlgorithm
     /// <summary>
     /// Logika interakcji dla klasy DlgAddFunction.xaml
     /// </summary>
-    public partial class DlgAddFunction : Window, INotifyPropertyChanged
+    public partial class DlgAddFunction : Window, IDataErrorInfo
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        virtual protected void OnPropertyChanged(string propertyName)
+        public double XFirstValue { get; set; }
+        public double XLastValue { get; set; }
+        public double YFirstValue { get; set; }
+        public double YLastValue { get; set; }
+
+        public string Error
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            get { return null; }
         }
 
-        private double xFirstValue;
-        private double xLastValue;
-
-        public double FirstValue
+        public string this[string columnName]
         {
-            get { return xFirstValue; }
-            set
+            get
             {
-                xFirstValue = value;
-                OnPropertyChanged("FirstValue");
-            }
-        }
-
-        public double LastValue
-        {
-            get { return xLastValue; }
-            set
-            {
-                if(value < FirstValue)
+                switch(columnName)
                 {
-                    throw new ArgumentException("End of x domain should be greater than a beginning ");
+                    case "XFirstValue":
+                        if (this.XFirstValue < 0)
+                            return "Value less than 0";
+                        break;
                 }
-                xLastValue = value;
-                OnPropertyChanged("LastValue");
+                return string.Empty;
             }
         }
 
@@ -62,6 +53,15 @@ namespace GeneticAlgorithm
 
         private void AddFunction(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(XFirstValue);
+            System.Diagnostics.Debug.WriteLine(XLastValue);
+            if (XLastValue < XFirstValue || YLastValue < YFirstValue)
+            {
+                if (MessageBox.Show("End of domain should be greater than a beginning of a domain", "Invalid function domain error", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
+                {
+                    return;
+                }
+            }
             DialogResult = true;
         }
     }

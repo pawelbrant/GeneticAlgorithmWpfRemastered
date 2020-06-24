@@ -47,7 +47,7 @@ namespace GeneticAlgorithm
             if (dlg.ShowDialog() == true)
             {
                 string functionExpression = dlg.functionExpression.Text;
-                double xFirstValue = dlg.FirstValue;
+                //double xFirstValue = dlg.FirstValue;
                 //double xLastValue = (double)dlg.xLastValue.Value;
                 //double yFirstValue = (double)dlg.yFirstValue.Value;
                 //double yLastValue = (double)dlg.yLastValue.Value;
