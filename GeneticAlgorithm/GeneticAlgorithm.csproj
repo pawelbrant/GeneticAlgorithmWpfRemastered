@@ -121,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DlgFilterParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FittingDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +149,9 @@
     </Compile>
     <Compile Include="DlgAddParameters.xaml.cs">
       <DependentUpon>DlgAddParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DlgFilterParameters.xaml.cs">
+      <DependentUpon>DlgFilterParameters.xaml</DependentUpon>
     </Compile>
     <Compile Include="EvaluatedFunction.cs" />
     <Compile Include="FittingDetailsWindow.xaml.cs">

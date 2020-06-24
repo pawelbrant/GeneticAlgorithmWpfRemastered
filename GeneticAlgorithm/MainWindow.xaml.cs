@@ -156,7 +156,16 @@ namespace GeneticAlgorithm
             }
             genericAlgorithmsList.ForEach((ga) =>
             {
-                ga.Fit();
+                try
+                {
+                    ga.Fit();
+                }
+                catch (Exception error)
+                {
+                    if (MessageBox.Show(error.ToString(), "Fitting function error", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
+                    {
+                    }
+                }
             });
             resultsList.ItemsSource = genericAlgorithmsList;
             resultsList.Items.Refresh();
@@ -318,17 +327,12 @@ namespace GeneticAlgorithm
                     {
                         //Launching the Excel file using the default Application.[MS Excel Or Free ExcelViewer]
                         System.Diagnostics.Process.Start("Output.pdf");
-
-                        //Exit
-                        Close();
                     }
                     catch (Win32Exception ex)
                     {
                         Console.WriteLine(ex.ToString());
                     }
                 }
-                else
-                    Close();
                 #endregion
             }
         }
@@ -426,15 +430,113 @@ namespace GeneticAlgorithm
 
         private void FilterParameters(object sender, RoutedEventArgs e)
         {
-            ListCollectionView collectionView = new ListCollectionView(algorithmParametersList);
-            collectionView.Filter = (o) =>
+            DlgFilterParameters dlg = new DlgFilterParameters();
+            if (dlg.ShowDialog() == true)
             {
-                AlgorithmParameters algorithmParameters = o as AlgorithmParameters;
-                if (algorithmParameters.isMaxSearching)
+                ListCollectionView collectionView = new ListCollectionView(algorithmParametersList);
+                collectionView.Filter = (o) =>
+                {
+                    AlgorithmParameters algorithmParameters = o as AlgorithmParameters;
+                    if(dlg.greaterCrossover.IsChecked!= null)
+                    {
+                        if ((bool)dlg.greaterCrossover.IsChecked)
+                        {
+                            if (algorithmParameters.CrossoverProbability <= dlg.crossoverProbability.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.lesserCrossover.IsChecked != null)
+                    {
+                        if ((bool)dlg.lesserCrossover.IsChecked)
+                        {
+                            if (algorithmParameters.CrossoverProbability >= dlg.crossoverProbability.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.greaterMutation.IsChecked != null)
+                    {
+                        if ((bool)dlg.greaterMutation.IsChecked)
+                        {
+                            if (algorithmParameters.MutationProbability <= dlg.mutationProbability.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.lesserMutation.IsChecked != null)
+                    {
+                        if ((bool)dlg.lesserMutation.IsChecked)
+                        {
+                            if (algorithmParameters.MutationProbability >= dlg.mutationProbability.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.greaterPrecision.IsChecked != null)
+                    {
+                        if ((bool)dlg.greaterPrecision.IsChecked)
+                        {
+                            if (algorithmParameters.Precision <= dlg.precision.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.lesserPrecision.IsChecked != null)
+                    {
+                        if ((bool)dlg.lesserPrecision.IsChecked)
+                        {
+                            if (algorithmParameters.Precision >= dlg.precision.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.greaterPopulation.IsChecked != null)
+                    {
+                        if ((bool)dlg.greaterPopulation.IsChecked)
+                        {
+                            if (algorithmParameters.Population <= dlg.individualsNumber.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.lesserPopulation.IsChecked != null)
+                    {
+                        if ((bool)dlg.lesserPopulation.IsChecked)
+                        {
+                            if (algorithmParameters.Population >= dlg.individualsNumber.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.greaterGeneration.IsChecked != null)
+                    {
+                        if ((bool)dlg.greaterGeneration.IsChecked)
+                        {
+                            if (algorithmParameters.Generations <= dlg.generationsNumber.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.lesserGeneration.IsChecked != null)
+                    {
+                        if ((bool)dlg.lesserGeneration.IsChecked)
+                        {
+                            if (algorithmParameters.Generations >= dlg.generationsNumber.Value)
+                                return false;
+                        }
+                    }
+                    if (dlg.minimumSearch.IsChecked != null)
+                    {
+                        if ((bool)dlg.minimumSearch.IsChecked)
+                        {
+                            if (algorithmParameters.isMaxSearching)
+                                return false;
+                        }
+                    }
+                    if (dlg.maximumSearch.IsChecked != null)
+                    {
+                        if ((bool)dlg.maximumSearch.IsChecked)
+                        {
+                            if (!algorithmParameters.isMaxSearching)
+                                return false;
+                        }
+                    }
                     return true;
-                return false;
-            };
-            AlgorithmGrid.ItemsSource = collectionView;
+                };
+                AlgorithmGrid.ItemsSource = collectionView;
+            }
         }
 
         private void ClearFilterParameters(object sender, RoutedEventArgs e)

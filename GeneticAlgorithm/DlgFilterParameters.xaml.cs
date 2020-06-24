@@ -23,5 +23,10 @@ namespace GeneticAlgorithm
         {
             InitializeComponent();
         }
+
+        private void FilterParameters(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 }
