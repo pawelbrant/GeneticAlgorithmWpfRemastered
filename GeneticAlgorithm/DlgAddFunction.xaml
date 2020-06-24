@@ -6,6 +6,27 @@
         xmlns:local="clr-namespace:GeneticAlgorithm" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Add function" Height="200" Width="800">
+    <Window.Resources>
+        <RoutedUICommand x:Key="AddFunctionCommand" Text="Add function" />
+        <ControlTemplate x:Key="errorTemplate">
+            <DockPanel LastChildFill="true">
+                <Border Background="OrangeRed" DockPanel.Dock="right"
+                    Margin="3,0,0,0" Width="20" Height="20" CornerRadius="5"
+                    ToolTip="{Binding ElementName=adoner,
+                        Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                    <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center"
+                           FontWeight="Bold" Foreground="white" />
+                </Border>
+                <AdornedElementPlaceholder Name="adoner" VerticalAlignment="Center">
+                    <Border BorderBrush="OrangeRed" BorderThickness="1" />
+                </AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource AddFunctionCommand}" Executed="AddFunction" CanExecute="CanExecuteAddFunction"/>
+    </Window.CommandBindings>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -13,7 +34,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Margin="5">Function: </Label>
@@ -36,18 +57,18 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Margin="5">X: (</Label>
-                <xctk:DoubleUpDown  x:Name="xFirstValue" Grid.Row="0" Grid.Column="1" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="xFirst" Grid.Row="0" Grid.Column="1" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000" Value="{Binding Path=XFirstValue, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource errorTemplate}"/>
                 <Label Grid.Row="0" Grid.Column="2" Margin="5"> , </Label>
-                <xctk:DoubleUpDown  x:Name="xLastValue" Grid.Row="0" Grid.Column="3" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="xLast" Grid.Row="0" Grid.Column="3" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000" Value="{Binding Path=XLastValue}" />
                 <Label Grid.Row="0" Grid.Column="4" Margin="5">) Y: (</Label>
-                <xctk:DoubleUpDown  x:Name="yFirstValue" Grid.Row="0" Grid.Column="5" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="yFirst" Grid.Row="0" Grid.Column="5" Margin="5" FormatString="F2" Watermark="First value in range" Increment=".01"  Maximum="1000" Minimum="-1000" Value="{Binding Path=YFirstValue}"/>
                 <Label Grid.Row="0" Grid.Column="6" Margin="5">,</Label>
-                <xctk:DoubleUpDown  x:Name="yLastValue" Grid.Row="0" Grid.Column="7" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000"/>
+                <xctk:DoubleUpDown  x:Name="yLast" Grid.Row="0" Grid.Column="7" Margin="5" FormatString="F2" Watermark="Last value in range" Increment=".01"  Maximum="1000" Minimum="-1000" Value="{Binding Path=YLastValue}"/>
                 <Label Grid.Row="0" Grid.Column="8" Margin="5">)</Label>
             </Grid>
         </GroupBox>
         <StackPanel Margin ="5,20,5,5" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2">
-            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" Click="AddFunction">Add</Button>
+            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" Command="{StaticResource AddFunctionCommand}">Add</Button>
             <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" IsCancel="True">Cancel</Button>
         </StackPanel>
     </Grid>

@@ -46,17 +46,17 @@ namespace GeneticAlgorithm
         private List<EvaluatedFunction> evaluatedFunctionsList = new List<EvaluatedFunction>();
         private List<AlgorithmParameters> algorithmParametersList = new List<AlgorithmParameters>();
         private List<GA> genericAlgorithmsList = new List<GA>();
-        private void AddFunctionBtn_Click(object sender, RoutedEventArgs e)
+        private void AddFunction(object sender, RoutedEventArgs e)
         {
             EvaluatedFunction evaluatedFunction;
             DlgAddFunction dlg = new DlgAddFunction();
             if (dlg.ShowDialog() == true)
             {
                 string functionExpression = dlg.functionExpression.Text;
-                double xFirstValue = (double)dlg.xFirstValue.Value;
-                double xLastValue = (double)dlg.xLastValue.Value;
-                double yFirstValue = (double)dlg.yFirstValue.Value;
-                double yLastValue = (double)dlg.yLastValue.Value;
+                double xFirstValue = (double)dlg.xFirst.Value;
+                double xLastValue = (double)dlg.xLast.Value;
+                double yFirstValue = (double)dlg.yFirst.Value;
+                double yLastValue = (double)dlg.yLast.Value;
                 evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
                 evaluatedFunctionsList.Add(evaluatedFunction);
                 FunctionGrid.Items.Refresh();
@@ -64,7 +64,7 @@ namespace GeneticAlgorithm
             }
         }
 
-        private void AddParametersBtn_Click(object sender, RoutedEventArgs e)
+        private void AddParameters(object sender, RoutedEventArgs e)
         {
             DlgAddParameters dlg = new DlgAddParameters();
             AlgorithmParameters algorithmParameters;
@@ -76,10 +76,15 @@ namespace GeneticAlgorithm
                 int generationsNumber = (int)dlg.generationsNumber.Value;
                 int precision = (int)dlg.precision.Value;
                 bool isMaximumSearching = (bool)dlg.maximumSearch.IsChecked;
-                algorithmParameters = new AlgorithmParameters(crossoverProbability, mutationProbability, population, generationsNumber, precision,isMaximumSearching);
+                algorithmParameters = new AlgorithmParameters(crossoverProbability, mutationProbability, population, generationsNumber, precision, isMaximumSearching);
                 algorithmParametersList.Add(algorithmParameters);
+                ICollectionView AlgParams = CollectionViewSource.GetDefaultView(AlgorithmGrid.ItemsSource);
+                if (AlgParams != null && AlgParams.CanGroup == true)
+                {
+                    AlgParams.GroupDescriptions.Clear();
+                }
                 AlgorithmGrid.Items.Refresh();
-            }
+            }   
         }
 
         private void Remove_Items(object sender, RoutedEventArgs e)
@@ -95,7 +100,15 @@ namespace GeneticAlgorithm
             FunctionGrid.Items.Refresh();
             AlgorithmGrid.Items.Refresh();
         }
-       
+
+        private void CanExecuteRemoveItems(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (AlgorithmGrid != null && FunctionGrid != null)
+            {
+                e.CanExecute = AlgorithmGrid.SelectedItems.Count != 0 || FunctionGrid.SelectedItems.Count != 0;
+            }
+        }
+
         private void Edit_Algorithm(object sender, RoutedEventArgs e)
         {
             DlgAddParameters dlg = new DlgAddParameters();
@@ -119,13 +132,21 @@ namespace GeneticAlgorithm
                 AlgorithmGrid.Items.Refresh();
             }
         }
+        private void CanExecuteEditAlgorithm(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (AlgorithmGrid != null)
+            {
+                e.CanExecute = AlgorithmGrid.SelectedItems.Count != 0;
+            }
+        }
 
-        private void Fitting_click(object sender, RoutedEventArgs e)
+
+        private void Fitting(object sender, RoutedEventArgs e)
         {
             genericAlgorithmsList.Clear();
             progress.Value = 0;
-            progress.Maximum = evaluatedFunctionsList.Count * AlgorithmGrid.SelectedItems.Count+10;
-            foreach (EvaluatedFunction evaluatedFunction in evaluatedFunctionsList)
+            progress.Maximum = FunctionGrid.SelectedItems.Count * AlgorithmGrid.SelectedItems.Count+10;
+            foreach (EvaluatedFunction evaluatedFunction in FunctionGrid.SelectedItems)
             {              
                 foreach (AlgorithmParameters algorithmParameters in AlgorithmGrid.SelectedItems)
                 {
@@ -141,8 +162,15 @@ namespace GeneticAlgorithm
             resultsList.Items.Refresh();
             progress.Value += 10;
         }
+        private void CanExecuteFit(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (AlgorithmGrid != null && FunctionGrid !=null)
+            {
+                e.CanExecute = AlgorithmGrid.SelectedItems.Count != 0 && FunctionGrid.SelectedItems.Count != 0;
+            }
+        }
 
-        private void ShowDetails_Click(object sender, RoutedEventArgs e)
+        private void ShowDetails(object sender, RoutedEventArgs e)
         {
             int index = resultsList.SelectedIndex;
             if (index == -1)
@@ -150,6 +178,13 @@ namespace GeneticAlgorithm
             FittingDetailsWindow details = new FittingDetailsWindow(genericAlgorithmsList[index]);
             details.Owner = this;
             details.ShowDialog();
+        }
+        private void CanExecuteShowDetails(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (resultsList != null)
+            {
+                e.CanExecute = resultsList.SelectedItems.Count != 0;
+            }
         }
 
         public List<GA> GetGAs()
@@ -298,20 +333,25 @@ namespace GeneticAlgorithm
             }
         }
 
+        private void CanExecuteExportToPDF(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = genericAlgorithmsList.Any();
+        }
+
         private void Edit_Function(object sender, RoutedEventArgs e)
         {
             DlgAddFunction dlg = new DlgAddFunction();
             EvaluatedFunction evaluatedFunction = FunctionGrid.SelectedItem as EvaluatedFunction;
             int indexOfFunction = evaluatedFunctionsList.IndexOf(evaluatedFunction);
             dlg.functionExpression.Text = evaluatedFunction.Function;
-            dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
-            dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
-            dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
-            dlg.yLastValue.Value = evaluatedFunction.yDomain.Y;
+            dlg.xFirst.Value = evaluatedFunction.xDomain.X;
+            dlg.xLast.Value = evaluatedFunction.xDomain.Y;
+            dlg.yFirst.Value = evaluatedFunction.yDomain.X;
+            dlg.yLast.Value = evaluatedFunction.yDomain.Y;
             if (dlg.ShowDialog() == true)
             {
-                evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
-                evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
+                evaluatedFunction.setxDomain((double)dlg.xFirst.Value, (double)dlg.xLast.Value);
+                evaluatedFunction.setyDomain((double)dlg.yFirst.Value, (double)dlg.yLast.Value);
                 evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
                 FunctionGrid.Items.Refresh();
             }
@@ -357,5 +397,72 @@ namespace GeneticAlgorithm
                 FunctionGrid.Items.Refresh();
             }
         }
+
+        private void CanExecuteEditFunction(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (FunctionGrid != null)
+            {
+                e.CanExecute = FunctionGrid.SelectedItems.Count != 0;
+            }
+        }
+
+        private void GroupParameters(object sender, RoutedEventArgs e)
+        {
+            ICollectionView AlgParams = CollectionViewSource.GetDefaultView(AlgorithmGrid.ItemsSource);
+            if (AlgParams != null && AlgParams.CanGroup == true)
+            {
+                AlgParams.GroupDescriptions.Clear();
+                AlgParams.GroupDescriptions.Add(new PropertyGroupDescription("isMaxSearching"));
+            }
+        }
+        private void ClearGroupParameters(object sender, RoutedEventArgs e)
+        {
+            ICollectionView AlgParams = CollectionViewSource.GetDefaultView(AlgorithmGrid.ItemsSource);
+            if (AlgParams != null && AlgParams.CanGroup == true)
+            {
+                AlgParams.GroupDescriptions.Clear();
+            }
+        }
+
+        private void FilterParameters(object sender, RoutedEventArgs e)
+        {
+            ListCollectionView collectionView = new ListCollectionView(algorithmParametersList);
+            collectionView.Filter = (o) =>
+            {
+                AlgorithmParameters algorithmParameters = o as AlgorithmParameters;
+                if (algorithmParameters.isMaxSearching)
+                    return true;
+                return false;
+            };
+            AlgorithmGrid.ItemsSource = collectionView;
+        }
+
+        private void ClearFilterParameters(object sender, RoutedEventArgs e)
+        {
+            AlgorithmGrid.ItemsSource = algorithmParametersList;
+        }
     }
+    [ValueConversion(typeof(Boolean), typeof(String))]
+    public class CompleteConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            bool isMaxSearching = (bool)value;
+            if (isMaxSearching)
+                return "Maximum search";
+            else
+                return "Minimum search";
+                
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string strIsMaxSearching = (string)value;
+            if (strIsMaxSearching == "Maximum search")
+                return false;
+            else
+                return true;
+        }
+    }
+
 }
