@@ -47,14 +47,14 @@ namespace GeneticAlgorithm
             if (dlg.ShowDialog() == true)
             {
                 string functionExpression = dlg.functionExpression.Text;
-                //double xFirstValue = dlg.FirstValue;
-                //double xLastValue = (double)dlg.xLastValue.Value;
-                //double yFirstValue = (double)dlg.yFirstValue.Value;
-                //double yLastValue = (double)dlg.yLastValue.Value;
-                //evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
-                //evaluatedFunctionsList.Add(evaluatedFunction);
-                //FunctionGrid.Items.Refresh();
-                //if (FunctionGrid.Columns.Count == 4) FunctionGrid.Columns[3].Visibility = Visibility.Hidden;
+                double xFirstValue = (double)dlg.xFirst.Value;
+                double xLastValue = (double)dlg.xLast.Value;
+                double yFirstValue = (double)dlg.yFirst.Value;
+                double yLastValue = (double)dlg.yLast.Value;
+                evaluatedFunction = new EvaluatedFunction(functionExpression, xFirstValue, xLastValue, yFirstValue, yLastValue);
+                evaluatedFunctionsList.Add(evaluatedFunction);
+                FunctionGrid.Items.Refresh();
+                if (FunctionGrid.Columns.Count == 4) FunctionGrid.Columns[3].Visibility = Visibility.Hidden;
             }
         }
 
@@ -70,10 +70,15 @@ namespace GeneticAlgorithm
                 int generationsNumber = (int)dlg.generationsNumber.Value;
                 int precision = (int)dlg.precision.Value;
                 bool isMaximumSearching = (bool)dlg.maximumSearch.IsChecked;
-                algorithmParameters = new AlgorithmParameters(crossoverProbability, mutationProbability, population, generationsNumber, precision,isMaximumSearching);
+                algorithmParameters = new AlgorithmParameters(crossoverProbability, mutationProbability, population, generationsNumber, precision, isMaximumSearching);
                 algorithmParametersList.Add(algorithmParameters);
+                ICollectionView AlgParams = CollectionViewSource.GetDefaultView(AlgorithmGrid.ItemsSource);
+                if (AlgParams != null && AlgParams.CanGroup == true)
+                {
+                    AlgParams.GroupDescriptions.Clear();
+                }
                 AlgorithmGrid.Items.Refresh();
-            }
+            }   
         }
 
         private void Remove_Items(object sender, RoutedEventArgs e)
@@ -333,17 +338,17 @@ namespace GeneticAlgorithm
             EvaluatedFunction evaluatedFunction = FunctionGrid.SelectedItem as EvaluatedFunction;
             int indexOfFunction = evaluatedFunctionsList.IndexOf(evaluatedFunction);
             dlg.functionExpression.Text = evaluatedFunction.Function;
-            //dlg.xFirstValue.Value = evaluatedFunction.xDomain.X;
-            //dlg.xLastValue.Value = evaluatedFunction.xDomain.Y;
-            //dlg.yFirstValue.Value = evaluatedFunction.yDomain.X;
-            //dlg.yLastValue.Value = evaluatedFunction.yDomain.Y;
-            //if (dlg.ShowDialog() == true)
-            //{
-            //    evaluatedFunction.setxDomain((double)dlg.xFirstValue.Value, (double)dlg.xLastValue.Value);
-            //    evaluatedFunction.setyDomain((double)dlg.yFirstValue.Value, (double)dlg.yLastValue.Value);
-            //    evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
-            //    FunctionGrid.Items.Refresh();
-            //}
+            dlg.xFirst.Value = evaluatedFunction.xDomain.X;
+            dlg.xLast.Value = evaluatedFunction.xDomain.Y;
+            dlg.yFirst.Value = evaluatedFunction.yDomain.X;
+            dlg.yLast.Value = evaluatedFunction.yDomain.Y;
+            if (dlg.ShowDialog() == true)
+            {
+                evaluatedFunction.setxDomain((double)dlg.xFirst.Value, (double)dlg.xLast.Value);
+                evaluatedFunction.setyDomain((double)dlg.yFirst.Value, (double)dlg.yLast.Value);
+                evaluatedFunctionsList[indexOfFunction] = evaluatedFunction;
+                FunctionGrid.Items.Refresh();
+            }
         }
         private void CanExecuteEditFunction(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -352,5 +357,64 @@ namespace GeneticAlgorithm
                 e.CanExecute = FunctionGrid.SelectedItems.Count != 0;
             }
         }
+
+        private void GroupParameters(object sender, RoutedEventArgs e)
+        {
+            ICollectionView AlgParams = CollectionViewSource.GetDefaultView(AlgorithmGrid.ItemsSource);
+            if (AlgParams != null && AlgParams.CanGroup == true)
+            {
+                AlgParams.GroupDescriptions.Clear();
+                AlgParams.GroupDescriptions.Add(new PropertyGroupDescription("isMaxSearching"));
+            }
+        }
+        private void ClearGroupParameters(object sender, RoutedEventArgs e)
+        {
+            ICollectionView AlgParams = CollectionViewSource.GetDefaultView(AlgorithmGrid.ItemsSource);
+            if (AlgParams != null && AlgParams.CanGroup == true)
+            {
+                AlgParams.GroupDescriptions.Clear();
+            }
+        }
+
+        private void FilterParameters(object sender, RoutedEventArgs e)
+        {
+            ListCollectionView collectionView = new ListCollectionView(algorithmParametersList);
+            collectionView.Filter = (o) =>
+            {
+                AlgorithmParameters algorithmParameters = o as AlgorithmParameters;
+                if (algorithmParameters.isMaxSearching)
+                    return true;
+                return false;
+            };
+            AlgorithmGrid.ItemsSource = collectionView;
+        }
+
+        private void ClearFilterParameters(object sender, RoutedEventArgs e)
+        {
+            AlgorithmGrid.ItemsSource = algorithmParametersList;
+        }
     }
+    [ValueConversion(typeof(Boolean), typeof(String))]
+    public class CompleteConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            bool isMaxSearching = (bool)value;
+            if (isMaxSearching)
+                return "Maximum search";
+            else
+                return "Minimum search";
+                
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string strIsMaxSearching = (string)value;
+            if (strIsMaxSearching == "Maximum search")
+                return false;
+            else
+                return true;
+        }
+    }
+
 }

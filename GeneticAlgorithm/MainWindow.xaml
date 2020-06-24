@@ -17,6 +17,7 @@
         <RoutedUICommand x:Key="RemoveItemsCommand" Text="Remove items" />
         <RoutedUICommand x:Key="FitCommand" Text="Fit" />
         <RoutedUICommand x:Key="ShowDetailsCommand" Text="Show details" />
+        <local:CompleteConverter x:Key="completeConverter" />
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="{StaticResource AddFunctionCommand}" Executed="AddFunction" />
@@ -63,8 +64,24 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0">Functions to optimize:</Label>
-            <Label Grid.Column="2" Grid.Row="0">Algorithm parameters:</Label>
+            <Label Grid.Column="0" Grid.Row="0" Margin="0,0,0,10" >Functions to optimize:</Label>
+            <Grid Grid.Column="2" Grid.Row="0" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Grid.Row="0">Algorithm parameters:</Label>
+                <Button Grid.Column="1" Grid.Row="0" Margin="10,0,10,0" Click="GroupParameters">Group  by searching type</Button>
+                <Button Grid.Column="2" Grid.Row="0" Margin="10,0,10,0" Click="ClearGroupParameters">Clear</Button>
+                <Button Grid.Column="3" Grid.Row="0" Margin="10,0,10,0" Click="FilterParameters">Filter</Button>
+                <Button Grid.Column="4" Grid.Row="0" Margin="0,0,9.6,0.2" Click="ClearFilterParameters" HorizontalAlignment="Right" Width="42">Clear</Button>
+            </Grid>
             <DataGrid Grid.Column="0" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="FunctionGrid" ColumnWidth="70"  IsReadOnly="True" MaxWidth="280" DisplayMemberPath="">
                 <DataGrid.Columns>
                 </DataGrid.Columns>
@@ -87,16 +104,27 @@
             <DataGrid Grid.Column="2" Grid.Row="1" SelectionMode="Extended" SelectionUnit="FullRow" Name="AlgorithmGrid" IsReadOnly="True">
                 <DataGrid.Columns>
                 </DataGrid.Columns>
+                <DataGrid.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <DockPanel Background="DarkRed">
+                                    <TextBlock Text="{Binding Path=Name, Converter={StaticResource completeConverter}}" Foreground="AntiqueWhite" Margin="30,0,0,0" Width="100"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </DataGrid.GroupStyle>
             </DataGrid>
             <Button x:Name="AddFunctionBtn" Grid.Column="0" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Command="{StaticResource AddFunctionCommand}">Add function</Button>
             <Button x:Name="AddParametersBtn" Grid.Column="2" Grid.Row="2"  Margin ="0 5 0 5" Padding="5" Command="{StaticResource AddAlgorithmParametersCommand}">Add algorithm parameters</Button>
             <GroupBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Header="Results">
                 <ListBox Name="resultsList" DisplayMemberPath="geneticAlgorithmResults">
-                    
+
                 </ListBox>
             </GroupBox>
         </Grid>
-        
+
     </Grid>
 
 </mah:MetroWindow>
