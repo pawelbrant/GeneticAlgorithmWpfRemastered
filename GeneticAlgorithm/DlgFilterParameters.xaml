@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeneticAlgorithm"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="DlgFilterParameters" Height="450" Width="800">
+        Title="DlgFilterParameters" Height="250" Width="800" MinHeight="250" MinWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -17,7 +18,82 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Header="Crossover" Grid.Row="0" Grid.Column="0">
+        <GroupBox Header="Crossover" Grid.Row="0" Grid.Column="0" Margin="5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <RadioButton Grid.Row="0" Grid.Column="0" x:Name="greaterCrossover">Greater than</RadioButton>
+                <RadioButton Grid.Row="1" Grid.Column="0" x:Name="lesserCrossover">Lesser than</RadioButton>
+                <xctk:DoubleUpDown  x:Name="crossoverProbability" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="5" FormatString="F2" Increment=".01"  Maximum="1" Minimum="0" Value="0.8"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Mutation" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <RadioButton Grid.Row="0" Grid.Column="0" x:Name="greaterMutation">Greater than</RadioButton>
+                <RadioButton Grid.Row="1" Grid.Column="0" x:Name="lesserMutation">Lesser than</RadioButton>
+                <xctk:DoubleUpDown  x:Name="mutationProbability" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="5" FormatString="F2" Increment=".01"  Maximum="1" Minimum="0" Value="0.1"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Precision" Grid.Row="0" Grid.Column="2" Margin="5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <RadioButton Grid.Row="0" Grid.Column="0" x:Name="greaterPrecision">Greater than</RadioButton>
+                <RadioButton Grid.Row="1" Grid.Column="0" x:Name="lesserPrecision">Lesser than</RadioButton>
+                <xctk:IntegerUpDown  x:Name="precision" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="1" Margin="5"  Maximum="100" Minimum="0" Value="10"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Population" Grid.Row="1" Grid.Column="0" Margin="5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <RadioButton Grid.Row="0" Grid.Column="0" x:Name="greaterPopulation">Greater than</RadioButton>
+                <RadioButton Grid.Row="1" Grid.Column="0" x:Name="lesserPopulation">Lesser than</RadioButton>
+                <xctk:IntegerUpDown  x:Name="individualsNumber" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="1" Margin="5"  Maximum="100" Minimum="0" Value="10"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Generations" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <RadioButton Grid.Row="0" Grid.Column="0" x:Name="greaterGeneration">Greater than</RadioButton>
+                <RadioButton Grid.Row="1" Grid.Column="0" x:Name="lesserGeneration">Lesser than</RadioButton>
+                <xctk:IntegerUpDown  x:Name="generationsNumber" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="1" Margin="5"  Maximum="100" Minimum="0" Value="10"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Searching condition" Grid.Row="1" Grid.Column="2" Margin="5" Padding="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -26,9 +102,13 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <RadioButton Grid.Row="0" Grid.Column="0" x:Name="greaterCrossover">Greater than</RadioButton>
-                <RadioButton Grid.Row="1" Grid.Column="0" x:Name="lesserCrossover">Lesser than</RadioButton>
+                <RadioButton x:Name="minimumSearch"  Grid.Row="0" Grid.Column="0">Minimum</RadioButton>
+                <RadioButton x:Name="maximumSearch" Grid.Row="1" Grid.Column="0">Maximum</RadioButton>
             </Grid>
         </GroupBox>
+        <StackPanel Margin ="5,20,5,5" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3">
+            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" Click="FilterParameters">Filter</Button>
+            <Button Width="auto" Padding="20,5,20,5" Margin="5,0,5,0" HorizontalAlignment="Right" IsCancel="True" >Cancel</Button>
+        </StackPanel>
     </Grid>
 </Window>
