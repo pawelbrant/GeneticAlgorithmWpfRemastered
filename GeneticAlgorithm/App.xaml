@@ -4,6 +4,56 @@
              xmlns:local="clr-namespace:GeneticAlgorithm"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <!-- Theme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Crimson.xaml" />
+                <ResourceDictionary>
+                    <Style TargetType="Label">
+                        <Setter Property="FontFamily" Value="Verdana"/>
+                    </Style>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <ControlTemplate x:Key="animatedButton" TargetType="{x:Type Button}">
+                        <Grid>
+                            <Border x:Name="border" BorderBrush="LightGray" BorderThickness="1"
+                    CornerRadius="3" Background="#e7e7e7" TextBlock.Foreground="Black"
+                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                            <Rectangle x:Name="fill" RadiusX="3" RadiusY="3" Fill="Gray" Height="auto" Width="auto">
+                                <Rectangle.Clip>
+                                    <EllipseGeometry x:Name="circle" Center="0,0" RadiusX="0" RadiusY="0"/>
+                                </Rectangle.Clip>
+                            </Rectangle>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="TextBlock.Foreground" Value="Gray"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName ="fill" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName ="circle" Storyboard.TargetProperty="RadiusX" To="100" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName ="circle" Storyboard.TargetProperty="RadiusY" To="100" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName ="fill" BeginTime="0:0:0.3" Storyboard.TargetProperty="Opacity" Duration="0:0:0"/>
+                                        <DoubleAnimation Storyboard.TargetName ="circle" BeginTime="0:0:0.3" Storyboard.TargetProperty="RadiusX" Duration="0:0:0"/>
+                                        <DoubleAnimation Storyboard.TargetName ="circle" BeginTime="0:0:0.3" Storyboard.TargetProperty="RadiusY" Duration="0:0:0"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
